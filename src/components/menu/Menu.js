@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import MenuItem from './MenuItem';
 
 import './Menu.css';
 
 const Menu = ({ menuItems, onSelect }) => {
     return (
         <div className="menu-page">
-            {menuItems.map(value => (<div className="menu-item" key={value} onClick={onSelect(value)}>{value}</div>))}
+            {menuItems.map(value => (<MenuItem key={value} value={value} onSelect={onSelect}/>))}
         </div>
     );
 };

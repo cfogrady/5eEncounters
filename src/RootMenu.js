@@ -1,4 +1,8 @@
+import React from 'react';
+import EncounterTracker from './components/encounter/tracker/EncounterTracker';
 
-export const rootMenu = {
-    'Encounter Tracker': <div>Test</div>
-}
+const rootMenu = {
+    'Encounter Tracker': <EncounterTracker/>
+};
+
+export default rootMenu;

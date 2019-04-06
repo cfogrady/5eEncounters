@@ -1,0 +1,8 @@
+.encounter-tracker-page {
+    font-size: 4em;
+    margin-top: .25em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
