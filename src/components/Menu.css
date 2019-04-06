@@ -1,0 +1,15 @@
+.menu-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.menu-item {
+    font-size: 5em;
+    color: white;
+    background-color: darkslategray;
+    margin-top: .25em;
+    padding: .25em;
+    border-radius: .5em;
+}
