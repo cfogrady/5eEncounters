@@ -1,10 +1,12 @@
 import { getDatabase, addStore } from './IndexedDB';
 
-addStore('monster-images', {keyPath: 'id', autoIncrement: true});
+const storeName = 'monster-images';
 
-export const addMonsterImage = monster => {
+addStore(storeName, {autoIncrement: true});
+
+export const addMonsterImage = monsterImage => {
     const db = getDatabase();
-    return db.put(storeName, monster);
+    return db.put(storeName, monsterImage);
 };
 
 export const removeMonsterImageById = id => {

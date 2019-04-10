@@ -11,6 +11,7 @@ import SkillsSection from './SkillsSection';
 import AbilitiesSection from './AbilitiesSection';
 import ActionsSection from './ActionsSection';
 import LegendaryActionsSection from './LegendaryActionsSection';
+import MonsterImageSection from './MonsterImageSection';
 
 import './MonsterModal.css';
 
@@ -58,7 +59,7 @@ class MonsterModal extends Component {
     }
 
     render() {
-        const { editable, show, monster, onClose, onCancel, onDelete } = this.props;
+        const { editable, show, monster, onSave, onCancel, onDelete, onImageSet } = this.props;
         if(monster == null) {
             return null;
         }
@@ -93,12 +94,15 @@ class MonsterModal extends Component {
                     <div className='monster-form-section border-bottom'>
                         <LegendaryActionsSection editable={editable} monster={monster} onChange={this.onChange} />
                     </div>
-                    <div className='monster-form-section'>
+                    <div className='monster-form-section border-bottom'>
                         <div>Description:</div>
                         <textarea className='textarea-size top-margin' onChange={this.onChange('description')} value={monster.description}/>
                     </div>
+                    <div className='monster-form-section'>
+                        <MonsterImageSection monster={monster} onImageSet={onImageSet}/>
+                    </div>
                     <div className='row-container-space-between top-margin'>
-                        <button onClick={onClose}>Save</button>
+                        <button onClick={onSave}>Save</button>
                         {monster.id != null && <button onClick={onDelete}>Delete</button>}
                         <button onClick={onCancel}>Cancel</button>
                     </div>
@@ -116,9 +120,10 @@ MonsterModal.propTypes = {
     }),
     editable: PropTypes.bool,
     show: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onDelete: PropTypes.func,
+    onImageSet: PropTypes.func,
 };
 
 MonsterModal.defaultProps = {
@@ -126,6 +131,7 @@ MonsterModal.defaultProps = {
     editable: false,
     onMonsterChange: noop,
     onDelete: noop,
+    onImageSet: noop,
 };
 
 export default MonsterModal;

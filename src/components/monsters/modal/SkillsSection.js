@@ -92,7 +92,10 @@ class SkillsSection extends Component {
                     </div>
                     <textarea className='top-margin textarea-size' value={monster.senses} onChange={onChange('senses')} placeholder='Senses'/>
                     <textarea className='top-margin textarea-size' value={monster.languages} onChange={onChange('languages')} placeholder='Languages'/>
-                    <div className='top-margin'><CRSelector value={monster.xp.toString()} onChange={onChangeNumber('xp')}/></div>
+                    <div className='row-container top-margin'>
+                        CR:
+                        <div className='left-margin'><CRSelector value={monster.xp.toString()} onChange={onChangeNumber('xp')}/></div>
+                    </div>
                 </div>
             );
         }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MoonLoader from 'react-spinners/MoonLoader';
 import { getAllMonsters, buildEmptyMonster, buildMonsterId, addMonster, removeMonsterById } from '../data-store/Monsters';
+import { addMonsterImage, removeMonsterImageById } from '../data-store/MonsterImages';
 import MonsterViewerHeader from './MonsterViewerHeader';
 import MonsterModal from './modal/MonsterModal';
 import { calculateCR } from './UnitConversionCalculator';
@@ -27,14 +28,16 @@ class MonsterViewer extends Component {
             monsterList: [],
             loading: true,
             selectedMonster: null,
+            imageURL: null,
             filterXp: null,
             filterName: null,
         };
         this.onAddMonster = this.onAddMonster.bind(this);
+        this.onImageSet = this.onImageSet.bind(this);
         this.onMonsterChange = this.onMonsterChange.bind(this);
         this.changeMonster = this.changeMonster.bind(this);
         this.onDeleteMonster = this.onDeleteMonster.bind(this);
-        this.closeMonsterModel = this.closeMonsterModel.bind(this);
+        this.saveMonsterModel = this.saveMonsterModel.bind(this);
         this.cancelMonsterModal = this.cancelMonsterModal.bind(this);
         this.changeXPFilter = this.changeXPFilter.bind(this);
         this.changeNameFilter = this.changeNameFilter.bind(this);
@@ -43,7 +46,14 @@ class MonsterViewer extends Component {
     onAddMonster() {
         this.setState({
             selectedMonster: buildEmptyMonster(),
+            imageURL: null,
         });
+    }
+
+    onImageSet(imageURL) {
+        this.setState({
+            imageURL,
+        })
     }
 
     onMonsterChange(monster) {
@@ -59,6 +69,7 @@ class MonsterViewer extends Component {
     cancelMonsterModal() {
         this.setState({
             selectedMonster: null,
+            imageURL: null,
         });
     }
 
@@ -66,20 +77,33 @@ class MonsterViewer extends Component {
         const monster = this.state.selectedMonster;
         let { monsterList } = this.state;
         monsterList = monsterList.filter(mon => mon.id !== monster.id);
+        if(monster.imageKey) {
+            removeMonsterImageById(monster.imageKey);
+        }
         removeMonsterById(monster.id);
         this.setState({
             selectedMonster: null,
             monsterList: sortMonsterList(monsterList),
+            imageURL: null,
         });
     }
 
-    closeMonsterModel() {
+    saveMonsterModel() {
         const monster = this.state.selectedMonster;
-        let { monsterList } = this.state;
+        let { monsterList, imageURL } = this.state;
         if(monster.id == null) {
             buildMonsterId(monster);
             monsterList = monsterList.concat([monster])
-            addMonster(monster);
+            if(imageURL) {
+                console.log('saving image');
+                addMonsterImage(imageURL).then(id => {
+                    console.log('id', id);
+                    monster.imageKey = id;
+                    addMonster(monster);
+                })
+            } else {
+                addMonster(monster);
+            }
         } else {
             const oldId = monster.id;
             monsterList = monsterList.filter(mon => mon.id !== monster.id);
@@ -90,6 +114,7 @@ class MonsterViewer extends Component {
         this.setState({
             selectedMonster: null,
             monsterList: sortMonsterList(monsterList),
+            imageURL: null,
         });
     }
 
@@ -121,7 +146,7 @@ class MonsterViewer extends Component {
     render() {
         const { monsterList, loading, selectedMonster, filterName, filterXp } = this.state;
         const showSelectedMonster = selectedMonster != null;
-        const formattedFilterName = filterName == null || filterName == '' ? null : filterName.toUpperCase();
+        const formattedFilterName = filterName == null || filterName === '' ? null : filterName.toUpperCase();
         return (
         <div className='mv-view'>
             <MonsterViewerHeader
@@ -134,15 +159,16 @@ class MonsterViewer extends Component {
             <MonsterModal
                 monster={selectedMonster}
                 show={showSelectedMonster}
-                onClose={this.closeMonsterModel}
+                onSave={this.saveMonsterModel}
                 onCancel={this.cancelMonsterModal}
                 onMonsterChange={this.onMonsterChange}
+                onImageSet={this.onImageSet}
                 onDelete={this.onDeleteMonster}
                 editable={true}
             />
             {monsterList.filter(monster => {
                 const nameMatch = formattedFilterName == null || monster.name.toUpperCase().indexOf(formattedFilterName) >= 0;
-                const xpMatch = filterXp == null || monster.xp == filterXp;
+                const xpMatch = filterXp == null || monster.xp === filterXp;
                 return xpMatch && nameMatch;
             }).map(monster => (
                 <div className='mv-monster' key={monster.id} onClick={this.changeMonster(monster)}>
