@@ -2,11 +2,15 @@
   "name": "5e-encounters",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://cfogrady.github.io/wasm_react_pwa_skeleton",
+  "homepage": "http://cfogrady.github.io/wasm_react_pwa_skeleton",
   "dependencies": {
+    "idb": "^4.0.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts": "2.1.2"
+    "react-images-upload": "^1.2.6",
+    "react-scripts": "2.1.2",
+    "react-spinners": "^0.5.4",
+    "underscore": "^1.9.1"
   },
   "scripts": {
     "start": "react-scripts start",

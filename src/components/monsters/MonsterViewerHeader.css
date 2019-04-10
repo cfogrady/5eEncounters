@@ -1,0 +1,19 @@
+.monster-viewer-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    width: 98%
+}
+
+.mvh-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.mvh-left-margin {
+    margin-left: 10px;
+}

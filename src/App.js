@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import MoonLoader from 'react-spinners/MoonLoader';
 import Menu from './components/menu/Menu';
 import rootMenu from './RootMenu';
+import { openDatabase } from './components/data-store/IndexedDB';
 
 import './App.css';
 
@@ -9,10 +11,20 @@ class App extends Component {
     super(props);
     this.state = {
       currentLocation: null,
+      databaseLoaded: false,
     };
     this.getDisplayElement = this.getDisplayElement.bind(this);
     this.backToRootMenu = this.backToRootMenu.bind(this);
     this.menuSelection = this.menuSelection.bind(this);
+  }
+
+  componentDidMount(props) {
+    openDatabase().then(_ => {
+      console.log('App DataStore opened');
+      this.setState({
+        databaseLoaded: true,
+      })
+    });
   }
 
   menuSelection(value) {
@@ -37,10 +49,20 @@ class App extends Component {
       currentLocation: null
     });
   }
-
   render() {
     const displayElement = this.getDisplayElement();
-    const { currentLocation } = this.state;
+    const { currentLocation, databaseLoaded } = this.state;
+    if(!databaseLoaded) {
+      return (
+        <div className="App">
+          <MoonLoader
+            sizeUnit={'vmin'}
+            size={33}
+            loading={!databaseLoaded}
+          />
+        </div>
+      );
+    }
     return (
       <div className="App">
         {currentLocation != null && <button onClick={this.backToRootMenu}>Menu</button>}
