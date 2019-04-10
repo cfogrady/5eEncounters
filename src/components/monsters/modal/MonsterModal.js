@@ -10,10 +10,9 @@ import AbilitiesSection from './AbilitiesSection';
 import ActionsSection from './ActionsSection';
 import LegendaryActionsSection from './LegendaryActionsSection';
 import MonsterImageSection from './MonsterImageSection';
+import DescriptionSection from './DescriptionSection';
 
 import './MonsterModal.css';
-import MonsterNameSection from './CombatSection';
-import DescriptionSection from './DescriptionSection';
 
 const setPathValue = (object, path, value) => {
     const splitPath = path.split(".");
