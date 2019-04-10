@@ -2,7 +2,7 @@
   "name": "5e-encounters",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://cfogrady.github.io/5e-encounters",
+  "homepage": "http://cfogrady.github.io/5eEncounters",
   "dependencies": {
     "idb": "^4.0.3",
     "react": "^16.7.0",
