@@ -70,6 +70,10 @@
     margin-left: 10px;
 }
 
+.mm-align-left {
+    text-align: left;
+}
+
 .side-margin {
     margin-left: 10px;
     margin-right: 10px;

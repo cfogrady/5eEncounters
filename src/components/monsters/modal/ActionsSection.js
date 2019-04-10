@@ -38,7 +38,7 @@ class ActionsSection extends Component {
         const {editable, monster, onChange} = this.props;
         if(editable) {
             return (
-                <div className='column-container'>
+                <div className='monster-form-section border-bottom'>
                     <div className='row-container'>
                         Actions: <button className='left-margin' onClick={this.onAddElement('actions', {name: '', descr: ''})}>Add Action</button>
                     </div>
@@ -51,13 +51,15 @@ class ActionsSection extends Component {
                     ))}
                 </div>
             );
+        } else if(monster.actions.length === 0) {
+            return null;
         }
         return (
-            <div className='column-container'>
+            <div className='monster-form-section border-bottom'>
                 <div className='red-text bold-text'>Actions</div>
                 {monster.actions.map((action, idx) => (
-                    <div className='top-margin' key={idx}>
-                        <span className='bold-text'>{action.name}</span>
+                    <div className='top-margin mm-align-left' key={idx}>
+                        <span className='bold-text'>{action.name}&nbsp;</span>
                         <span>{action.descr}</span>
                     </div>
                 ))}

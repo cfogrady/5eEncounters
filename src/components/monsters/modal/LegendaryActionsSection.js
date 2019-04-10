@@ -37,9 +37,13 @@ class ActionsSection extends Component {
 
     render() {
         const {editable, monster, onChange} = this.props;
+        console.log(monster.legendaryActions);
+        /*if(monster.legendaryActions.actions === []) {
+            return null;
+        }*/
         if(editable) {
             return (
-                <div className='column-container'>
+                <div className='monster-form-section border-bottom'>
                     <div className='row-container'>
                         Legendary Actions: <button className='left-margin' onClick={this.onAddElement('legendaryActions.actions', {name: '', descr: ''})}>Add Action</button>
                     </div>
@@ -53,14 +57,16 @@ class ActionsSection extends Component {
                     ))}
                 </div>
             );
+        } else if(monster.legendaryActions.actions.length === 0) {
+            return null;
         }
         return (
-            <div className='column-container'>
+            <div className='monster-form-section border-bottom'>
                 <div className='red-text bold-text'>Legendary Actions</div>
                 <div>{monster.legendaryActions.summary}</div>
                 {monster.legendaryActions.actions.map((action, idx) => (
-                    <div className='top-margin' key={idx}>
-                        <span className='bold-text'>{action.name}</span>
+                    <div className='top-margin mm-align-left' key={idx}>
+                        <span className='bold-text'>{action.name}&nbsp;</span>
                         <span>{action.descr}</span>
                     </div>
                 ))}

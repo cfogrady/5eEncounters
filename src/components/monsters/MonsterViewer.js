@@ -31,6 +31,7 @@ class MonsterViewer extends Component {
             imageURL: null,
             filterXp: null,
             filterName: null,
+            editing: false,
         };
         this.onAddMonster = this.onAddMonster.bind(this);
         this.onImageSet = this.onImageSet.bind(this);
@@ -41,18 +42,26 @@ class MonsterViewer extends Component {
         this.cancelMonsterModal = this.cancelMonsterModal.bind(this);
         this.changeXPFilter = this.changeXPFilter.bind(this);
         this.changeNameFilter = this.changeNameFilter.bind(this);
+        this.onToggleEdit = this.onToggleEdit.bind(this);
     }
 
     onAddMonster() {
         this.setState({
             selectedMonster: buildEmptyMonster(),
             imageURL: null,
+            editing: true,
         });
     }
 
     onImageSet(imageURL) {
         this.setState({
             imageURL,
+        })
+    }
+
+    onToggleEdit() {
+        this.setState({
+            editing: true,
         })
     }
 
@@ -70,6 +79,7 @@ class MonsterViewer extends Component {
         this.setState({
             selectedMonster: null,
             imageURL: null,
+            editing: false
         });
     }
 
@@ -85,6 +95,7 @@ class MonsterViewer extends Component {
             selectedMonster: null,
             monsterList: sortMonsterList(monsterList),
             imageURL: null,
+            editing: false,
         });
     }
 
@@ -115,6 +126,7 @@ class MonsterViewer extends Component {
             selectedMonster: null,
             monsterList: sortMonsterList(monsterList),
             imageURL: null,
+            editing: false,
         });
     }
 
@@ -144,7 +156,7 @@ class MonsterViewer extends Component {
     }
 
     render() {
-        const { monsterList, loading, selectedMonster, filterName, filterXp } = this.state;
+        const { monsterList, loading, selectedMonster, filterName, filterXp, editing } = this.state;
         const showSelectedMonster = selectedMonster != null;
         const formattedFilterName = filterName == null || filterName === '' ? null : filterName.toUpperCase();
         return (
@@ -164,7 +176,8 @@ class MonsterViewer extends Component {
                 onMonsterChange={this.onMonsterChange}
                 onImageSet={this.onImageSet}
                 onDelete={this.onDeleteMonster}
-                editable={true}
+                editable={editing}
+                onToggleEdit={this.onToggleEdit}
             />
             {monsterList.filter(monster => {
                 const nameMatch = formattedFilterName == null || monster.name.toUpperCase().indexOf(formattedFilterName) >= 0;

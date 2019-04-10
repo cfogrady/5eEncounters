@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { noop, clone } from 'underscore';
 import SimpleModal from '../../modals/SimpleModal';
-import SizeSelector from '../selectors/SizeSelector';
-import TypeSelector from '../selectors/TypeSelector';
-import AlignmentSelector from '../selectors/AlignmentSelector';
-import CombatStatSection from './CombatStatSection';
+import NameSection from './NameSection';
+import CombatSection from './CombatSection';
 import StatSection from './StatSection';
 import SkillsSection from './SkillsSection';
 import AbilitiesSection from './AbilitiesSection';
@@ -14,6 +12,8 @@ import LegendaryActionsSection from './LegendaryActionsSection';
 import MonsterImageSection from './MonsterImageSection';
 
 import './MonsterModal.css';
+import MonsterNameSection from './CombatSection';
+import DescriptionSection from './DescriptionSection';
 
 const setPathValue = (object, path, value) => {
     const splitPath = path.split(".");
@@ -59,53 +59,35 @@ class MonsterModal extends Component {
     }
 
     render() {
-        const { editable, show, monster, onSave, onCancel, onDelete, onImageSet } = this.props;
+        const { editable, show, monster, onSave, onCancel, onDelete, onImageSet, onToggleEdit } = this.props;
         if(monster == null) {
             return null;
         }
         return (
             <SimpleModal show={show}>
                 <div className='monster-form'>
-                    <div className='monster-form-section border-bottom'>
-                        {editable ? <input type='text' placeholder='Monster Name' onChange={this.onChange('name')} value={monster.name || ''}/> : <span className='red-text bold-text'>{monster.name}</span>}
-                        {editable ? (
-                            <div className='monster-form-row-section'>
-                                <SizeSelector value={monster.size || 'None'} onChange={this.onChange('size')}/>
-                                <div className='left-margin'><TypeSelector value={monster.type || 'None'} onChange={this.onChange('type')}/></div>
-                                <div className='left-margin'><AlignmentSelector value={monster.alignment || 'None'} onChange={this.onChange('alignment')}/></div>
-                            </div>
-                        ) : <span>`${monster.size} ${monster.type}, ${monster.alignment}`</span>}
-                    </div>
-                    <div className='monster-form-section border-bottom'>
-                        <CombatStatSection editable={editable} monster={monster} onChangeNumber={this.onChangeNumber} />
-                    </div>
-                    <div className='monster-form-section border-bottom'>
-                        <StatSection editable={editable} monster={monster} onChangeNumber={this.onChangeNumber}/>
-                    </div>
-                    <div className='monster-form-section border-bottom'>
-                        <SkillsSection editable={editable} monster={monster} onChange={this.onChange} onChangeNumber={this.onChangeNumber} />
-                    </div>
-                    <div className='monster-form-section border-bottom'>
-                        <AbilitiesSection editable={editable} monster={monster} onChange={this.onChange} />
-                    </div>
-                    <div className='monster-form-section border-bottom'>
-                        <ActionsSection editable={editable} monster={monster} onChange={this.onChange} />
-                    </div>
-                    <div className='monster-form-section border-bottom'>
-                        <LegendaryActionsSection editable={editable} monster={monster} onChange={this.onChange} />
-                    </div>
-                    <div className='monster-form-section border-bottom'>
-                        <div>Description:</div>
-                        <textarea className='textarea-size top-margin' onChange={this.onChange('description')} value={monster.description}/>
-                    </div>
+                    <NameSection editable={editable} monster={monster} onChange={this.onChange}/>
+                    <CombatSection editable={editable} monster={monster} onChangeNumber={this.onChangeNumber} />
+                    <StatSection editable={editable} monster={monster} onChangeNumber={this.onChangeNumber}/>
+                    <SkillsSection editable={editable} monster={monster} onChange={this.onChange} onChangeNumber={this.onChangeNumber} />
+                    <AbilitiesSection editable={editable} monster={monster} onChange={this.onChange} />
+                    <ActionsSection editable={editable} monster={monster} onChange={this.onChange} />
+                    <LegendaryActionsSection editable={editable} monster={monster} onChange={this.onChange} />
+                    <DescriptionSection editable={editable} monster={monster} onChange={this.onChange} />
                     <div className='monster-form-section'>
                         <MonsterImageSection monster={monster} onImageSet={onImageSet}/>
                     </div>
+                    { editable ? (
                     <div className='row-container-space-between top-margin'>
                         <button onClick={onSave}>Save</button>
                         {monster.id != null && <button onClick={onDelete}>Delete</button>}
                         <button onClick={onCancel}>Cancel</button>
+                    </div>) :
+                    <div className='row-container-space-between top-margin'>
+                        {onToggleEdit !== noop && <button onClick={onToggleEdit}>Edit</button>}
+                        <button onClick={onCancel}>Close</button>
                     </div>
+                    }
 
                 </div>
 
@@ -124,6 +106,7 @@ MonsterModal.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onDelete: PropTypes.func,
     onImageSet: PropTypes.func,
+    onToggleEdit: PropTypes.func,
 };
 
 MonsterModal.defaultProps = {
@@ -132,6 +115,7 @@ MonsterModal.defaultProps = {
     onMonsterChange: noop,
     onDelete: noop,
     onImageSet: noop,
+    onToggleEdit: noop,
 };
 
 export default MonsterModal;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { calculateModStr } from '../UnitConversionCalculator';
+import { numberToString, calculateCR } from '../UnitConversionCalculator';
 import SkillSelector from '../selectors/SkillSelector';
 import DamageTypeSelector from '../selectors/DamageTypeSelector';
 import ConditionSelector from '../selectors/ConditionSelector';
@@ -43,7 +43,7 @@ class SkillsSection extends Component {
         const {editable, monster, onChange, onChangeNumber} = this.props;
         if(editable) {
             return (
-                <div className="column-container">
+                <div className='monster-form-section border-bottom'>
                     <div className="column-continer">
                         <div className="row-container">Skills <button onClick={this.onAddElement('skills', {skill: 'None', modifier: 0})} className="left-margin">Add Skill</button></div> 
                         {monster.skills.map((skill, idx) => (
@@ -100,31 +100,54 @@ class SkillsSection extends Component {
             );
         }
         return (
-            <div className="row-container center-container">
-                <div className="col-continer center-container side-margin">
-                    <div className="red-text bold-text">STR</div>
-                    <div className="red-text">{`${monster.stats.str} (${calculateModStr(monster.stats.str)})`}</div>
+            <div className='monster-form-section border-bottom'>
+                {monster.skills.length !== 0 && (
+                    <div className='row-container mm-align-left'>
+                        <span className='red-text bold-text'>Skills&nbsp;</span>
+                        <span className='red-text'>{monster.skills.map((skill, idx) => `${idx === 0 ? '' : ', '}${skill.skill} ${numberToString(skill.modifier)}`)}</span>
+                    </div>
+                )}
+                {monster.damageVulnerabilities.length !== 0 && (
+                    <div className='row-container mm-align-left'>
+                        <span className='red-text bold-text'>Damage Vulnerabilities&nbsp;</span>
+                        <span className='red-text'>{monster.damageVulnerabilities.map((vulnerability, idx) => `${idx === 0 ? '' : ', '}${vulnerability}`)}</span>
+                    </div>
+                )}
+                {monster.damageResistances.length !== 0 && (
+                    <div className='row-container mm-align-left'>
+                        <span className='red-text bold-text'>Damage Resistances&nbsp;</span>
+                        <span className='red-text'>{monster.damageResistances.map((resistance, idx) => `${idx === 0 ? '' : ', '}${resistance}`)}</span>
+                    </div>
+                )}
+                {monster.damageImmunities.length !== 0 && (
+                    <div className='row-container mm-align-left'>
+                        <span className='red-text bold-text'>Damage Immunities&nbsp;</span>
+                        <span className='red-text'>{monster.damageImmunities.map((immunity, idx) => `${idx === 0 ? '' : ', '}${immunity}`)}</span>
+                    </div>
+                )}
+                {monster.conditionImmunities.length !== 0 && (
+                    <div className='row-container mm-align-left'>
+                        <span className='red-text bold-text'>Condition Immunities&nbsp;</span>
+                        <span className='red-text'>{monster.conditionImmunities.map((immunity, idx) => `${idx === 0 ? '' : ', '}${immunity}`)}</span>
+                    </div>
+                )}
+                {monster.senses !== '' && monster.senses != null && (
+                    <div className='mm-align-left'>
+                        <span className='red-text bold-text'>Senses&nbsp;</span>
+                        <span className='red-text'>{monster.senses}</span>
+                    </div>
+                )}
+                {monster.languages !== '' && monster.languages != null && (
+                    <div className='mm-align-left'>
+                        <span className='red-text bold-text'>Languages&nbsp;</span>
+                        <span className='red-text'>{monster.languages}</span>
+                    </div>
+                )}
+                <div className='mm-align-left'>
+                        <span className='red-text bold-text'>Challenge&nbsp;</span>
+                        <span className='red-text'>{`${calculateCR(monster.xp)} (${monster.xp} XP)`}</span>
                 </div>
-                <div className="col-continer center-container side-margin">
-                    <div className="red-text bold-text">DEX</div>
-                    <div className="red-text">{`${monster.stats.dex} (${calculateModStr(monster.stats.dex)})`}</div>
-                </div>
-                <div className="col-continer center-container side-margin">
-                    <div className="red-text bold-text">CON</div>
-                    <div className="red-text">{`${monster.stats.con} (${calculateModStr(monster.stats.con)})`}</div>
-                </div>
-                <div className="col-continer center-container side-margin">
-                    <div className="red-text bold-text">INT</div>
-                    <div className="red-text">{`${monster.stats.int} (${calculateModStr(monster.stats.int)})`}</div>
-                </div>
-                <div className="col-continer center-container side-margin">
-                    <div className="red-text bold-text">WIS</div>
-                    <div className="red-text">{`${monster.stats.wis} (${calculateModStr(monster.stats.wis)})`}</div>
-                </div>
-                <div className="col-continer center-container side-margin">
-                    <div className="red-text bold-text">CHA</div>
-                    <div className="red-text">{`${monster.stats.cha} (${calculateModStr(monster.stats.cha)})`}</div>
-                </div>
+
             </div>
         );
     }

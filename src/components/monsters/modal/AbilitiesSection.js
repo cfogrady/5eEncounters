@@ -38,7 +38,7 @@ class AbilitiesSection extends Component {
         const {editable, monster, onChange} = this.props;
         if(editable) {
             return (
-                <div className='column-container'>
+                <div className='monster-form-section border-bottom'>
                     <div className='row-container'>
                         Abilities: <button className='left-margin' onClick={this.onAddElement('abilities', {name: '', descr: ''})}>Add Ability</button>
                     </div>
@@ -51,12 +51,15 @@ class AbilitiesSection extends Component {
                     ))}
                 </div>
             );
+        } else if (monster.abilities.length === 0) {
+            console.log('No abilities');
+            return null;
         }
         return (
-            <div className='column-container'>
+            <div className='monster-form-section border-bottom mm-align-left'>
                 {monster.abilities.map((ability, idx) => (
                     <div key={idx}>
-                        <span className='bold-text'>{ability.name}</span>
+                        <span className='bold-text'>{ability.name}&nbsp;</span>
                         <span>{ability.descr}</span>
                     </div>
                 ))}
