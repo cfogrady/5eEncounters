@@ -96,7 +96,7 @@ class EncounterBuilder extends Component {
             const { encounter } = this.state;
             const qty = parseInt(event.target.value);
             encounter.monsters.forEach(monsterGroup => {
-                if(monsterGroup.monster.id == monsterId) {
+                if(monsterGroup.monster.id === monsterId) {
                     monsterGroup.count = qty;
                 }
             });
