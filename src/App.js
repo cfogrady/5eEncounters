@@ -65,7 +65,9 @@ class App extends Component {
     }
     return (
       <div className="App">
-        {displayElement}
+        <div className='app-location'>
+          {displayElement}
+        </div>
         {currentLocation != null && <button onClick={this.backToRootMenu}>Menu</button>}
       </div>
     );
