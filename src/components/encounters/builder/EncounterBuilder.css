@@ -1,0 +1,66 @@
+.eb-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.eb-difficulty-text {
+    font-weight: bold;
+    color: white;
+    margin: .5em;
+}
+
+.eb-columns-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.eb-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+}
+
+.eb-list-element {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    border-radius: .5em;
+    color: white;
+    background-color: darkslategray;
+    padding: .25em;
+    margin: .25em;
+}
+
+.eb-margin-element {
+    margin: .25em .5em .25em .5em;
+}
+
+.eb-clickable {
+    cursor: pointer;
+}
+
+.eb-number-input {
+    width: 4em;
+    margin: .25em .5em .25em .5em;
+}
+
+.eb-name-input {
+    margin: .25em .5em .25em .5em;
+}
+
+.eb-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: .25em .5em .25em .5em;
+}

@@ -52,7 +52,6 @@ class AbilitiesSection extends Component {
                 </div>
             );
         } else if (monster.abilities.length === 0) {
-            console.log('No abilities');
             return null;
         }
         return (

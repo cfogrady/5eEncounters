@@ -72,6 +72,12 @@ class PlayerModal extends Component {
                         <input
                             className='pm-margin-left pm-number-input'
                             type='number'
+                            placeholder='Level'
+                            onChange={this.onChangeNumber('level')} value={player.level || ''}
+                        />
+                        <input
+                            className='pm-margin-left pm-number-input'
+                            type='number'
                             placeholder='Max Hp'
                             onChange={this.onChangeNumber('maxHp')} value={player.maxHp || ''}
                         />

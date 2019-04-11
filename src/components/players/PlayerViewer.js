@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { getAllPlayers, removePlayerById, addPlayer, buildEmptyPlayer } from './data-store/Players';
 import PlayerViewerHeader from './PlayerViewerHeader';
 
 import './PlayerViewer.css';
 import PlayerModal from './modal/PlayerModal';
+import SelectOrEditModal from '../common/modals/SelectOrEditModal';
 
 /*const sortPlayerListByCharacter = playerList => {
     return playerList.sort((a, b) => {
@@ -40,12 +41,14 @@ class PlayerViewer extends Component {
             loading: true,
             filterName: null,
             selectedPlayer: null,
+            selectOrEditPlayer: null,
         };
         this.onNameFilter = this.onNameFilter.bind(this);
         this.onDeletePlayer = this.onDeletePlayer.bind(this);
         this.onSavePlayer = this.onSavePlayer.bind(this);
         this.onCancelPlayerModal = this.onCancelPlayerModal.bind(this);
         this.onPlayerChange = this.onPlayerChange.bind(this);
+        this.viewPlayer = this.viewPlayer.bind(this);
         this.changePlayer = this.changePlayer.bind(this);
         this.onAddPlayer = this.onAddPlayer.bind(this);
         this.sortMethod = sortPlayerListByPlayer;
@@ -72,11 +75,24 @@ class PlayerViewer extends Component {
     onPlayerChange(player) {
         this.setState({
             selectedPlayer: player,
+            selectOrEditPlayer: null,
         });
     }
 
+    viewPlayer(player) {
+        this.onPlayerChange(player);
+    }
+
     changePlayer(player) {
-        return _ => this.onPlayerChange(player);
+        return _ => {
+            if(this.props.onSelectPlayer == null) {
+                this.onPlayerChange(player);
+            } else {
+                this.setState({
+                    selectOrEditPlayer: player,
+                })
+            }
+        };
     }
 
     onAddPlayer() {
@@ -130,8 +146,10 @@ class PlayerViewer extends Component {
     }
 
     render() {
-        const { playerList, selectedPlayer, filterName } = this.state;
+        const { playerList, selectedPlayer, filterName, selectOrEditPlayer } = this.state;
+        const { onSelectPlayer } = this.props;
         const showSelectedPlayer = selectedPlayer != null;
+        const showSelectOrEditPlayer = selectOrEditPlayer != null;
         const formattedFilterName = filterName == null || filterName === '' ? null : filterName.toUpperCase();
         return (
         <div className='pv-view'>
@@ -139,6 +157,11 @@ class PlayerViewer extends Component {
                 filterName={filterName}
                 onAddPlayer={this.onAddPlayer}
                 onNameFilter={this.onNameFilter}
+            />
+            <SelectOrEditModal
+                onSelect={_ => onSelectPlayer(selectOrEditPlayer)}
+                onView={_ => this.viewPlayer(selectOrEditPlayer)}
+                show={showSelectOrEditPlayer}
             />
             <PlayerModal
                 player={selectedPlayer}
@@ -154,7 +177,7 @@ class PlayerViewer extends Component {
             }).map(player => (
                 <div className='pv-player' key={player.id} onClick={this.changePlayer(player)}>
                     <div>{`${player.characterName} (${player.playerName})`}</div>
-                    <div>Max Hp: {player.maxHp}</div>
+                    <div>Level: {player.level} Max Hp: {player.maxHp}</div>
                 </div>
             ))}
         </div>
@@ -163,9 +186,11 @@ class PlayerViewer extends Component {
 };
 
 PlayerViewer.propTypes = {
+    onSelectPlayer: PropTypes.func,
 }
 
 PlayerViewer.defaultProps = {
+    onSelectPlayer: null,
 }
 
 export default PlayerViewer;

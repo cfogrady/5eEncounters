@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 //import MoonLoader from 'react-spinners/MoonLoader';
 import { getAllMonsters, buildEmptyMonster, buildMonsterId, addMonster, removeMonsterById } from './data-store/Monsters';
 import { addMonsterImage, removeMonsterImageById } from './data-store/MonsterImages';
 import MonsterViewerHeader from './MonsterViewerHeader';
 import MonsterModal from './modal/MonsterModal';
 import { calculateCR } from './UnitConversionCalculator';
+import SelectOrEditModal from '../common/modals/SelectOrEditModal';
 
 import './MonsterViewer.css';
 
@@ -32,10 +34,12 @@ class MonsterViewer extends Component {
             filterXp: null,
             filterName: null,
             editing: false,
+            selectOrViewMonster: null,
         };
         this.onAddMonster = this.onAddMonster.bind(this);
         this.onImageSet = this.onImageSet.bind(this);
         this.onMonsterChange = this.onMonsterChange.bind(this);
+        this.viewMonster = this.viewMonster.bind(this);
         this.changeMonster = this.changeMonster.bind(this);
         this.onDeleteMonster = this.onDeleteMonster.bind(this);
         this.saveMonsterModel = this.saveMonsterModel.bind(this);
@@ -68,11 +72,24 @@ class MonsterViewer extends Component {
     onMonsterChange(monster) {
         this.setState({
             selectedMonster: monster,
+            selectOrViewMonster: null,
         });
     }
 
+    viewMonster(monster) {
+        this.onMonsterChange(monster);
+    }
+
     changeMonster(monster) {
-        return _ => this.onMonsterChange(monster);
+        return _ => {
+            if(this.props.onSelectMonster == null) {
+                this.onMonsterChange(monster);
+            } else {
+                this.setState({
+                    selectOrViewMonster: monster,
+                })
+            }
+        };
     }
 
     cancelMonsterModal() {
@@ -156,8 +173,10 @@ class MonsterViewer extends Component {
     }
 
     render() {
-        const { monsterList, selectedMonster, filterName, filterXp, editing } = this.state;
+        const { onSelectMonster } = this.props;
+        const { monsterList, selectedMonster, filterName, filterXp, editing, selectOrViewMonster } = this.state;
         const showSelectedMonster = selectedMonster != null;
+        const showSelectOrViewMonster = selectOrViewMonster != null;
         const formattedFilterName = filterName == null || filterName === '' ? null : filterName.toUpperCase();
         return (
         <div className='mv-view'>
@@ -167,6 +186,11 @@ class MonsterViewer extends Component {
                 onAddMonster={this.onAddMonster}
                 onNameFilter={this.changeNameFilter}
                 onXPFilter={this.changeXPFilter}
+            />
+            <SelectOrEditModal
+                onSelect={_ => onSelectMonster(selectOrViewMonster)}
+                onView={_ => this.viewMonster(selectOrViewMonster)}
+                show={showSelectOrViewMonster}
             />
             <MonsterModal
                 monster={selectedMonster}
@@ -191,6 +215,14 @@ class MonsterViewer extends Component {
         </div>
         );
     }
+}
+
+MonsterViewer.propTypes = {
+    onSelectMonster: PropTypes.func,
+}
+
+MonsterViewer.defaultProps = {
+    onSelectMonster: null,
 }
 
 export default MonsterViewer;

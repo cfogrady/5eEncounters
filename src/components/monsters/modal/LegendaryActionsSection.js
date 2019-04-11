@@ -37,10 +37,6 @@ class ActionsSection extends Component {
 
     render() {
         const {editable, monster, onChange} = this.props;
-        console.log(monster.legendaryActions);
-        /*if(monster.legendaryActions.actions === []) {
-            return null;
-        }*/
         if(editable) {
             return (
                 <div className='monster-form-section border-bottom'>

@@ -14,6 +14,11 @@ export const removeMonsterById = id => {
     return db.delete(storeName, id);
 };
 
+export const getMonsterById = id => {
+    const db = getDatabase();
+    return db.get(storeName, id);
+};
+
 export const getAllMonsters = _ => getDatabase().getAll(storeName);
 
 export const buildEmptyMonster = _ => ({

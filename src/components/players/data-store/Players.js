@@ -14,10 +14,16 @@ export const removePlayerById = id => {
     return db.delete(storeName, id);
 };
 
+export const getPlayerById = id => {
+    const db = getDatabase();
+    return db.get(storeName, id);
+};
+
 export const getAllPlayers = _ => getDatabase().getAll(storeName);
 
 export const buildEmptyPlayer = _ => ({
     playerName: '',
     characterName: '',
+    level: 0,
     maxHp: 0,
 });
