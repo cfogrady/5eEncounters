@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ImageUploader from 'react-images-upload';
 import PropTypes from 'prop-types';
 import { noop } from 'underscore';
-import { getMonsterImage } from '../../data-store/MonsterImages';
+import { getMonsterImage } from '../data-store/MonsterImages';
 
 import './MonsterModal.css';
 

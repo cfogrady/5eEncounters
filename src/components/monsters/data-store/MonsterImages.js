@@ -1,4 +1,4 @@
-import { getDatabase, addStore } from './IndexedDB';
+import { getDatabase, addStore } from '../../common/data-store/IndexedDB';
 
 const storeName = 'monster-images';
 

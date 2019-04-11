@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import MoonLoader from 'react-spinners/MoonLoader';
-import { getAllMonsters, buildEmptyMonster, buildMonsterId, addMonster, removeMonsterById } from '../data-store/Monsters';
-import { addMonsterImage, removeMonsterImageById } from '../data-store/MonsterImages';
+//import MoonLoader from 'react-spinners/MoonLoader';
+import { getAllMonsters, buildEmptyMonster, buildMonsterId, addMonster, removeMonsterById } from './data-store/Monsters';
+import { addMonsterImage, removeMonsterImageById } from './data-store/MonsterImages';
 import MonsterViewerHeader from './MonsterViewerHeader';
 import MonsterModal from './modal/MonsterModal';
 import { calculateCR } from './UnitConversionCalculator';
@@ -26,7 +26,7 @@ class MonsterViewer extends Component {
         super(props);
         this.state = {
             monsterList: [],
-            loading: true,
+            // loading: true,
             selectedMonster: null,
             imageURL: null,
             filterXp: null,
@@ -156,7 +156,7 @@ class MonsterViewer extends Component {
     }
 
     render() {
-        const { monsterList, loading, selectedMonster, filterName, filterXp, editing } = this.state;
+        const { monsterList, selectedMonster, filterName, filterXp, editing } = this.state;
         const showSelectedMonster = selectedMonster != null;
         const formattedFilterName = filterName == null || filterName === '' ? null : filterName.toUpperCase();
         return (

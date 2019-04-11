@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { noop, clone } from 'underscore';
-import SimpleModal from '../../modals/SimpleModal';
+import SimpleModal from '../../common/modals/SimpleModal';
 import NameSection from './NameSection';
 import CombatSection from './CombatSection';
 import StatSection from './StatSection';

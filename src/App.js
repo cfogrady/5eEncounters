@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MoonLoader from 'react-spinners/MoonLoader';
 import Menu from './components/menu/Menu';
 import rootMenu from './RootMenu';
-import { openDatabase } from './components/data-store/IndexedDB';
+import { openDatabase } from './components/common/data-store/IndexedDB';
 
 import './App.css';
 
