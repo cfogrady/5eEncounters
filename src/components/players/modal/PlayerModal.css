@@ -1,0 +1,38 @@
+.player-modal-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: antiquewhite;
+    overflow-y: scroll;
+    padding: 10px;
+    max-height: 90vh;
+    border-radius: .5em;
+}
+
+.pm-row-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.pm-flex-start {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.pm-space-between {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pm-margin-top {
+    margin-top: 10px;
+}
+
+.pm-margin-left {
+    margin-left: 10px;
+}
+
+.pm-full-width {
+    width: 100%;
+}

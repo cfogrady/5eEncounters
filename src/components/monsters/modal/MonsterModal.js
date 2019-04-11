@@ -74,7 +74,7 @@ class MonsterModal extends Component {
                     <LegendaryActionsSection editable={editable} monster={monster} onChange={this.onChange} />
                     <DescriptionSection editable={editable} monster={monster} onChange={this.onChange} />
                     <div className='monster-form-section'>
-                        <MonsterImageSection monster={monster} onImageSet={onImageSet}/>
+                        <MonsterImageSection editable={editable} monster={monster} onImageSet={onImageSet}/>
                     </div>
                     { editable ? (
                     <div className='row-container-space-between top-margin'>

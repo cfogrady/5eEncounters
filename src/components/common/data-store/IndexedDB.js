@@ -20,7 +20,7 @@ const upgrade = (db, oldVersion, newVersion, transaction) => {
 };
 
 export const openDatabase = _ => {
-    return openDB(databaseName, 1, { upgrade, }).then(db => {
+    return openDB(databaseName, 2, { upgrade, }).then(db => {
         database = db;
     });
 };

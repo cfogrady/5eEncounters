@@ -49,16 +49,20 @@ class MonsterImageSection extends Component {
 
     render() {
         const { loadingImage, pictureURL } = this.state;
+        const { editable } = this.props;
         if(!loadingImage && pictureURL == null) {
-            return (
-                <ImageUploader
-                    withIcon={true}
-                    buttonText='Choose images'
-                    onChange={this.onDrop}
-                    imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
-                    maxFileSize={5242880}
-                />
-            );
+            if(editable) {
+                return (
+                    <ImageUploader
+                        withIcon={true}
+                        buttonText='Choose images'
+                        onChange={this.onDrop}
+                        imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
+                        maxFileSize={5242880}
+                    />
+                );
+            }
+            return null;
         }
         return (
             <div className="row-container center-container">
@@ -70,10 +74,12 @@ class MonsterImageSection extends Component {
 
 MonsterImageSection.propTypes = {
     monster: PropTypes.shape({}).isRequired,
+    editable: PropTypes.bool,
     onImageSet: PropTypes.func,
 }
 
 MonsterImageSection.defaultProps = {
+    editable: false,
     onImageSet: noop,
 }
 
