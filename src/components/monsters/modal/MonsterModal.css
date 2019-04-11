@@ -5,7 +5,7 @@
     align-items: flex-start;
     background-color: antiquewhite;
     overflow-y: scroll;
-    padding: 10px;
+    padding: .5em;
     max-height: 90vh;
     border-radius: .5em;
 }
@@ -41,6 +41,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+    flex-wrap: wrap;
     width: 100%;
 }
 
@@ -72,6 +73,10 @@
 
 .mm-align-left {
     text-align: left;
+}
+
+.mm-margin-element {
+    margin: .25em;
 }
 
 .side-margin {

@@ -1,9 +1,11 @@
 .menu-item {
-    font-size: 5em;
+    font-size: 36pt;
     color: white;
     background-color: darkslategray;
-    margin-top: .25em;
+    margin-top: .5em;
     padding: .25em;
     border-radius: .5em;
+    width: 7em;
+    text-align: center;
     cursor: pointer;
 }

@@ -3,6 +3,21 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    width: 98%
+    width: 100%;
+    margin-top: .5em;
+}
+
+.pvh-element {
+    display: flex;
+    margin: .25em;
+}
+
+.pvh-first-element {
+    display: flex;
+    margin: .25em .25em .25em .5em;
+}
+
+.pvh-last-element {
+    display: flex;
+    margin: .25em .5em .25em .25em;
 }

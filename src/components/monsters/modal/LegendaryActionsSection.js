@@ -50,9 +50,9 @@ class ActionsSection extends Component {
                     <textarea className='top-margin textarea-size' placeholder='Legendary Action Summary and Restrictions' onChange={onChange('legendaryActions.summary')} value={monster.legendaryActions.summary}/>
                     {monster.legendaryActions.actions.map((action, idx) => (
                         <div key={idx} className='row-container top-margin'>
-                            <input placeholder='Action Name' type='text' value={action.name} onChange={onChange(`legendaryActions.actions.${idx}.name`)}/>
-                            <textarea className='left-margin textarea-size' placeholder='Action Description' value={action.descr} onChange={onChange(`legendaryActions.actions.${idx}.descr`)}/>
-                            <button className='left-margin' onClick={this.onRemoveElement('legendaryActions.actions', idx)}>Delete</button>
+                            <input className='mm-margin-element' placeholder='Action Name' type='text' value={action.name} onChange={onChange(`legendaryActions.actions.${idx}.name`)}/>
+                            <textarea className='mm-margin-element textarea-size' placeholder='Action Description' value={action.descr} onChange={onChange(`legendaryActions.actions.${idx}.descr`)}/>
+                            <button className='mm-margin-element' onClick={this.onRemoveElement('legendaryActions.actions', idx)}>Delete</button>
                         </div>
                     ))}
                 </div>

@@ -44,9 +44,9 @@ class AbilitiesSection extends Component {
                     </div>
                     {monster.abilities.map((ability, idx) => (
                         <div key={idx} className='row-container top-margin'>
-                            <input type='text' placeholder='Ability Name' value={ability.name} onChange={onChange(`abilities.${idx}.name`)}/>
-                            <textarea className='left-margin textarea-size' placeholder='Ability Description' value={ability.descr} onChange={onChange(`abilities.${idx}.descr`)}/>
-                            <button className='left-margin' onClick={this.onRemoveElement('abilities', idx)}>Delete</button>
+                            <input className='mm-margin-element' type='text' placeholder='Ability Name' value={ability.name} onChange={onChange(`abilities.${idx}.name`)}/>
+                            <textarea className='mm-margin-element textarea-size' placeholder='Ability Description' value={ability.descr} onChange={onChange(`abilities.${idx}.descr`)}/>
+                            <button className='mm-margin-element' onClick={this.onRemoveElement('abilities', idx)}>Delete</button>
                         </div>
                     ))}
                 </div>

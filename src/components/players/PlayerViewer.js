@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { noop } from 'underscore';
+//import PropTypes from 'prop-types';
 import { getAllPlayers, removePlayerById, addPlayer, buildEmptyPlayer } from './data-store/Players';
 import PlayerViewerHeader from './PlayerViewerHeader';
 
 import './PlayerViewer.css';
 import PlayerModal from './modal/PlayerModal';
 
-const sortPlayerListByCharacter = playerList => {
+/*const sortPlayerListByCharacter = playerList => {
     return playerList.sort((a, b) => {
         const nameA = a.characterName.toUpperCase(); // ignore upper and lowercase
         const nameB = b.characterName.toUpperCase(); // ignore upper and lowercase
@@ -18,7 +17,7 @@ const sortPlayerListByCharacter = playerList => {
         }
         return 0;
     });
-}
+}*/
 
 const sortPlayerListByPlayer = playerList => {
     return playerList.sort((a, b) => {
@@ -116,14 +115,13 @@ class PlayerViewer extends Component {
                 });
             });
         } else {
-            const oldId = player.id;
             playerList = playerList.map(plyr => {
                 if(plyr.id !== player.id) {
                     return plyr;
                 }
                 return player;
             });
-            addPlayer(player);
+            addPlayer(player); //acts as a put
             this.setState({
                 selectedPlayer: null,
                 playerList: this.sortMethod(playerList),
@@ -165,14 +163,9 @@ class PlayerViewer extends Component {
 };
 
 PlayerViewer.propTypes = {
-    monster: PropTypes.shape({}).isRequired,
-    editable: PropTypes.bool,
-    onImageSet: PropTypes.func,
 }
 
 PlayerViewer.defaultProps = {
-    editable: false,
-    onImageSet: noop,
 }
 
 export default PlayerViewer;

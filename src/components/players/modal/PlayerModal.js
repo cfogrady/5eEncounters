@@ -56,29 +56,30 @@ class PlayerModal extends Component {
         return (
             <SimpleModal show={show}>
                 <div className='player-modal-form'>
-                    <div className='pm-row-container pm-flex-start'>
+                    <div className='pm-row-container pm-flex-start pm-margin-top'>
                         <input
+                            className='pm-first-element'
                             type='text'
                             placeholder='Player Name'
                             onChange={this.onChange('playerName')} value={player.playerName || ''}
                         />
                         <input
-                            className='pm-margin-left'
+                            className='pm-margin-left pm-input'
                             type='text'
                             placeholder='Character Name'
                             onChange={this.onChange('characterName')} value={player.characterName || ''}
                         />
                         <input
-                            className='pm-margin-left'
+                            className='pm-margin-left pm-number-input'
                             type='number'
                             placeholder='Max Hp'
                             onChange={this.onChangeNumber('maxHp')} value={player.maxHp || ''}
                         />
                     </div>
-                    <div className='pm-row-container pm-space-between pm-margin-top pm-full-width'>
-                        <button onClick={onSave}>Save</button>
-                        {player.id != null && <button onClick={onDelete}>Delete</button>}
-                        <button onClick={onCancel}>Cancel</button>
+                    <div className='pm-row-container pm-space-between pm-margin-top pm-margin-bottom'>
+                        <button className='pm-first-element' onClick={onSave}>Save</button>
+                        {player.id != null && <button className='pm-element' onClick={onDelete}>Delete</button>}
+                        <button className='pm-last-element' onClick={onCancel}>Cancel</button>
                     </div>
                 </div>
 

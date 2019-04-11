@@ -14,12 +14,13 @@ class PlayerViewerHeader extends Component {
         return (
             <div className='player-viewer-header'>
                 <input
+                    className='pvh-first-element'
                     placeholder='Filter By Player Name'
                     type='search'
                     value={filterName || ''}
                     onChange={onNameFilter}
                 />
-                <button onClick={onAddPlayer}>Add Player</button>
+                <button className='pvh-last-element' onClick={onAddPlayer}>Add Player</button>
             </div>
         );
     }

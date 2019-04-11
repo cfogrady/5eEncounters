@@ -21,6 +21,7 @@ class MonsterViewerHeader extends Component {
             <div className='monster-viewer-header'>
                 <div className='mvh-row'>
                     <input
+                        className='mvh-filter'
                         placeholder='Filter By Monster Name'
                         type='search'
                         value={filterName || ''}
