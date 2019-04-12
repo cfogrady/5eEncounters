@@ -123,9 +123,7 @@ class MonsterViewer extends Component {
             buildMonsterId(monster);
             monsterList = monsterList.concat([monster])
             if(imageURL) {
-                console.log('saving image');
                 addMonsterImage(imageURL).then(id => {
-                    console.log('id', id);
                     monster.imageKey = id;
                     addMonster(monster);
                 })
@@ -137,7 +135,14 @@ class MonsterViewer extends Component {
             monsterList = monsterList.filter(mon => mon.id !== monster.id);
             buildMonsterId(monster);
             monsterList = monsterList.concat([monster]);
-            removeMonsterById(oldId).then(_ => addMonster(monster));
+            if(imageURL) {
+                addMonsterImage(imageURL).then(id => {
+                    monster.imageKey = id;
+                    removeMonsterById(oldId).then(_ => addMonster(monster));
+                })
+            } else {
+                removeMonsterById(oldId).then(_ => addMonster(monster));
+            }
         }
         this.setState({
             selectedMonster: null,
