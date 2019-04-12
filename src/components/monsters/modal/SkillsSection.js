@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { numberToString, calculateCR } from '../UnitConversionCalculator';
 import SkillSelector from '../selectors/SkillSelector';
-import DamageTypeSelector from '../selectors/DamageTypeSelector';
-import ConditionSelector from '../selectors/ConditionSelector';
 import StatSelector from '../selectors/StatSelector';
 
 import './MonsterModal.css';
@@ -66,40 +64,16 @@ class SkillsSection extends Component {
                         ))}
                     </div>
                     <div className="column-continer top-margin">
-                        <div className="row-container">Damage Vulnerabilities <button onClick={this.onAddElement('damageVulnerabilities', 'None')} className="left-margin">Add Vulnerability</button></div> 
-                        {monster.damageVulnerabilities.map((vulnerability, idx) => (
-                            <div className='row-container top-margin' key={idx}>
-                                <DamageTypeSelector value={vulnerability} onChange={onChange(`damageVulnerabilities.${idx}`)}/>
-                                <button className='left-margin' onClick={this.onRemoveElement('damageVulnerabilities', idx)}>Delete</button>
-                            </div>
-                        ))}
+                        <div className="row-container">Damage Vulnerabilities <input onChange={onChange('damageVulnerabilities')} value={monster.damageVulnerabilities} className="left-margin"/></div> 
                     </div>
                     <div className="column-continer top-margin">
-                        <div className="row-container">Damage Resistances <button onClick={this.onAddElement('damageResistances', 'None')} className="left-margin">Add Resistance</button></div> 
-                        {monster.damageResistances.map((resistance, idx) => (
-                            <div className='row-container top-margin' key={idx}>
-                                <DamageTypeSelector value={resistance} onChange={onChange(`damageResistances.${idx}`)}/>
-                                <button className='left-margin' onClick={this.onRemoveElement('damageResistances', idx)}>Delete</button>
-                            </div>
-                        ))}
+                        <div className="row-container">Damage Resistances <input onChange={onChange('damageResistances')} value={monster.damageResistances} className="left-margin"/></div> 
                     </div>
                     <div className="column-continer top-margin">
-                        <div className="row-container">Damage Immunities <button onClick={this.onAddElement('damageImmunities', 'None')} className="left-margin">Add Immunity</button></div> 
-                        {monster.damageImmunities.map((immunity, idx) => (
-                            <div className='row-container top-margin' key={idx}>
-                                <DamageTypeSelector value={immunity} onChange={onChange(`damageImmunities.${idx}`)}/>
-                                <button className='left-margin' onClick={this.onRemoveElement('damageImmunities', idx)}>Delete</button>
-                            </div>
-                        ))}
+                        <div className="row-container">Damage Immunities <input onChange={onChange('damageImmunities')} value={monster.damageImmunities} className="left-margin"/></div> 
                     </div>
                     <div className="column-continer top-margin">
-                        <div className="row-container">Condition Immunities <button onClick={this.onAddElement('conditionImmunities', 'None')} className="left-margin">Add Immunity</button></div> 
-                        {monster.conditionImmunities.map((immunity, idx) => (
-                            <div className='row-container top-margin' key={idx}>
-                                <ConditionSelector value={immunity} onChange={onChange(`conditionImmunities.${idx}`)}/>
-                                <button className='left-margin' onClick={this.onRemoveElement('conditionImmunities', idx)}>Delete</button>
-                            </div>
-                        ))}
+                        <div className="row-container">Condition Immunities <input onChange={onChange('conditionImmunities')} value={monster.conditionImmunities} className="left-margin"/></div> 
                     </div>
                     <textarea className='top-margin textarea-size' value={monster.senses} onChange={onChange('senses')} placeholder='Senses'/>
                     <textarea className='top-margin textarea-size' value={monster.languages} onChange={onChange('languages')} placeholder='Languages'/>
@@ -127,25 +101,25 @@ class SkillsSection extends Component {
                 {monster.damageVulnerabilities.length !== 0 && (
                     <div className='row-container mm-align-left'>
                         <span className='red-text bold-text'>Damage Vulnerabilities&nbsp;</span>
-                        <span className='red-text'>{monster.damageVulnerabilities.map((vulnerability, idx) => `${idx === 0 ? '' : ', '}${vulnerability}`)}</span>
+                        <span className='red-text'>{monster.damageVulnerabilities}</span>
                     </div>
                 )}
                 {monster.damageResistances.length !== 0 && (
                     <div className='row-container mm-align-left'>
                         <span className='red-text bold-text'>Damage Resistances&nbsp;</span>
-                        <span className='red-text'>{monster.damageResistances.map((resistance, idx) => `${idx === 0 ? '' : ', '}${resistance}`)}</span>
+                        <span className='red-text'>{monster.damageResistances}</span>
                     </div>
                 )}
                 {monster.damageImmunities.length !== 0 && (
                     <div className='row-container mm-align-left'>
                         <span className='red-text bold-text'>Damage Immunities&nbsp;</span>
-                        <span className='red-text'>{monster.damageImmunities.map((immunity, idx) => `${idx === 0 ? '' : ', '}${immunity}`)}</span>
+                        <span className='red-text'>{monster.damageImmunities}</span>
                     </div>
                 )}
                 {monster.conditionImmunities.length !== 0 && (
                     <div className='row-container mm-align-left'>
                         <span className='red-text bold-text'>Condition Immunities&nbsp;</span>
-                        <span className='red-text'>{monster.conditionImmunities.map((immunity, idx) => `${idx === 0 ? '' : ', '}${immunity}`)}</span>
+                        <span className='red-text'>{monster.conditionImmunities}</span>
                     </div>
                 )}
                 {monster.senses !== '' && monster.senses != null && (

@@ -79,3 +79,25 @@ const addSavingThrows = tnx => {
 };
 
 addUpgrade(addSavingThrows, 4);
+
+const convertDamageTypesToStringFields = tnx => {
+    getAllMonsters(tnx).then(monsterList => {
+        monsterList.forEach(monster => {
+            monster.damageImmunities = monster.damageImmunities.reduce((result, current) => {
+                return result.length > 0 ? result + ', ' + current : current;
+            }, '');
+            monster.damageResistances = monster.damageResistances.reduce((result, current) => {
+                return result.length > 0 ? result + ', ' + current : current;
+            }, '');
+            monster.damageVulnerabilities = monster.damageVulnerabilities.reduce((result, current) => {
+                return result.length > 0 ? result + ', ' + current : current;
+            }, '');
+            monster.conditionImmunities = monster.conditionImmunities.reduce((result, current) => {
+                return result.length > 0 ? result + ', ' + current : current;
+            }, '');
+            addMonster(monster, tnx);
+        });
+    })
+};
+
+addUpgrade(convertDamageTypesToStringFields, 5);

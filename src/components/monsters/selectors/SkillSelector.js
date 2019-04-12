@@ -20,7 +20,7 @@ const SkillSelector = ({ onChange, value }) => {
             <option value="Performance">Performance</option>
             <option value="Persuasion">Persuasion</option>
             <option value="Religion">Religion</option>
-            <option value="Sleight of Hand">Sleight of Hand</option>
+            <option value="Sleight of Hand">Sleight Of Hand</option>
             <option value="Stealth">Stealth</option>
             <option value="Survival">Survival</option>
         </select>

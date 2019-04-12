@@ -12,6 +12,12 @@ export const numberToString = number => {
 
 export const calculateCR = xp => xpToCR[xp];
 
+export const calculateXP = cr => {
+    return Object.keys(xpToCR).filter(key => {
+        return xpToCR[key] === cr;
+    })[0];
+};
+
 export const xpToCR = {
     0: '0',
     25: '1/8',
