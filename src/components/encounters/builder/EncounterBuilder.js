@@ -169,7 +169,7 @@ EncounterBuilder.propTypes = {
             id: PropTypes.string,
             count: PropTypes.number, 
         })),
-        playerIds: PropTypes.arrayOf(PropTypes.number),
+        players: PropTypes.arrayOf(PropTypes.number),
     }),
     onChangeView: PropTypes.func.isRequired,
 }

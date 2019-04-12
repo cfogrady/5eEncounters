@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { LIST, BUILDER, RUNNER } from './Views';
 import EncountersList from './list/EncountersList';
 import EncounterBuilder from './builder/EncounterBuilder';
+import EncounterRunner from './runner/EncounterRunner';
 
 class EncountersContainer extends Component {
     constructor(props) {
@@ -29,6 +30,9 @@ class EncountersContainer extends Component {
             }
             case BUILDER: {
                 return (<EncounterBuilder onChangeView={this.onChangeView} encounter={encounter}/>)
+            }
+            case RUNNER: {
+                return (<EncounterRunner onChangeView={this.onChangeView} encounter={encounter}/>)
             }
             default: {
                 console.error('Received unknown encounter view');

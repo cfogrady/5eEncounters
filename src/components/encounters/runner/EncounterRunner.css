@@ -1,0 +1,41 @@
+.er-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.er-creature-container {
+    background-color: darkslategray;
+    color: white;
+    width: 90%;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    padding: .25em;
+    border-radius: .5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.er-droppable {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.er-draggable {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.er-element {
+    margin: .25em;
+}

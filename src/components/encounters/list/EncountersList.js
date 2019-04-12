@@ -30,6 +30,7 @@ class EncountersList extends Component {
         this.onNameFilter = this.onNameFilter.bind(this);
         this.onDeleteEncounter = this.onDeleteEncounter.bind(this);
         this.onEditEncounter = this.onEditEncounter.bind(this);
+        this.onRunEncounter = this.onRunEncounter.bind(this);
     }
 
     componentDidMount() {
@@ -52,6 +53,10 @@ class EncountersList extends Component {
 
     onEditEncounter(encounter = null) {
         return _ => this.props.onChangeView(BUILDER, encounter);
+    }
+
+    onRunEncounter(encounter = null) {
+        return _ => this.props.onChangeView(RUNNER, encounter);
     }
 
     onDeleteEncounter(encounterId) {
@@ -85,8 +90,7 @@ class EncountersList extends Component {
                         <button className='el-row-force-space' onClick={this.onEditEncounter(encounter)}>Edit</button>
                         <button className='el-row-force-space' onClick={this.onDeleteEncounter(encounter.id)}>Delete</button>
                         <button className='el-row-force-space'
-                            disabled
-                            onClick={_=>null}
+                            onClick={this.onRunEncounter(encounter)}
                         >Run</button>
                     </div>
                 </div>

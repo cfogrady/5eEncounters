@@ -6,6 +6,7 @@
   "dependencies": {
     "idb": "^4.0.3",
     "react": "^16.7.0",
+    "react-beautiful-dnd": "^10.1.1",
     "react-dom": "^16.7.0",
     "react-images-upload": "^1.2.6",
     "react-scripts": "2.1.2",
