@@ -66,7 +66,7 @@ class MonsterModal extends Component {
             <SimpleModal show={show}>
                 <div className='monster-form'>
                     <NameSection editable={editable} monster={monster} onChange={this.onChange}/>
-                    <CombatSection editable={editable} monster={monster} onChangeNumber={this.onChangeNumber} />
+                    <CombatSection editable={editable} monster={monster} onChange={this.onChange} onChangeNumber={this.onChangeNumber} />
                     <StatSection editable={editable} monster={monster} onChangeNumber={this.onChangeNumber}/>
                     <SkillsSection editable={editable} monster={monster} onChange={this.onChange} onChangeNumber={this.onChangeNumber} />
                     <AbilitiesSection editable={editable} monster={monster} onChange={this.onChange} />

@@ -4,6 +4,7 @@ import { numberToString, calculateCR } from '../UnitConversionCalculator';
 import SkillSelector from '../selectors/SkillSelector';
 import DamageTypeSelector from '../selectors/DamageTypeSelector';
 import ConditionSelector from '../selectors/ConditionSelector';
+import StatSelector from '../selectors/StatSelector';
 
 import './MonsterModal.css';
 import CRSelector from '../selectors/CRSelector';
@@ -49,8 +50,18 @@ class SkillsSection extends Component {
                         {monster.skills.map((skill, idx) => (
                             <div className='row-container top-margin' key={idx}>
                                 <SkillSelector value={skill.skill} onChange={onChange(`skills.${idx}.skill`)}/>
-                                <input className='left-margin number-size' type='number' value={skill.modifier} onChange={onChangeNumber(`skills.${idx}.modifier`)}/>
+                                <input className='left-margin number-size' type='number' value={skill.modifier || ''} onChange={onChangeNumber(`skills.${idx}.modifier`)}/>
                                 <button className='left-margin' onClick={this.onRemoveElement('skills', idx)}>Delete</button>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="column-continer top-margin">
+                        <div className="row-container">Saving Throws <button onClick={this.onAddElement('savingThrows', {stat: 'None', modifier: 0})} className="left-margin">Add Save</button></div> 
+                        {monster.savingThrows.map((save, idx) => (
+                            <div className='row-container top-margin' key={idx}>
+                                <StatSelector value={save.stat} onChange={onChange(`savingThrows.${idx}.stat`)}/>
+                                <input className='left-margin number-size' type='number' value={save.modifier || ''} onChange={onChangeNumber(`savingThrows.${idx}.modifier`)}/>
+                                <button className='left-margin' onClick={this.onRemoveElement('savingThrows', idx)}>Delete</button>
                             </div>
                         ))}
                     </div>
@@ -105,6 +116,12 @@ class SkillsSection extends Component {
                     <div className='row-container mm-align-left'>
                         <span className='red-text bold-text'>Skills&nbsp;</span>
                         <span className='red-text'>{monster.skills.map((skill, idx) => `${idx === 0 ? '' : ', '}${skill.skill} ${numberToString(skill.modifier)}`)}</span>
+                    </div>
+                )}
+                {monster.savingThrows.length !== 0 && (
+                    <div className='row-container mm-align-left'>
+                        <span className='red-text bold-text'>Saving Throws&nbsp;</span>
+                        <span className='red-text'>{monster.savingThrows.map((save, idx) => `${idx === 0 ? '' : ', '}${save.stat} ${numberToString(save.modifier)}`)}</span>
                     </div>
                 )}
                 {monster.damageVulnerabilities.length !== 0 && (

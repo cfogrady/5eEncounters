@@ -1,12 +1,14 @@
-import { getDatabase, addStore } from '../../common/data-store/IndexedDB';
+import { getDatabase, addStore, addUpgrade } from '../../common/data-store/IndexedDB';
 
 const storeName = 'monsters';
 
 addStore(storeName, {keyPath: 'id'});
 
-export const addMonster = monster => {
-    const db = getDatabase();
-    return db.put(storeName, monster);
+export const addMonster = (monster, tnx = null) => {
+    if(tnx == null) {
+        return getDatabase().put(storeName, monster);
+    }
+    return tnx.objectStore(storeName).put(monster);
 };
 
 export const removeMonsterById = id => {
@@ -19,7 +21,12 @@ export const getMonsterById = id => {
     return db.get(storeName, id);
 };
 
-export const getAllMonsters = _ => getDatabase().getAll(storeName);
+export const getAllMonsters = (tnx = null) => {
+    if(tnx == null) {
+        return getDatabase().getAll(storeName);
+    }
+    return tnx.objectStore(storeName).getAll();
+};
 
 export const buildEmptyMonster = _ => ({
     name: '',
@@ -38,7 +45,9 @@ export const buildEmptyMonster = _ => ({
     xp: 0,
     ac: 0,
     hp: 0,
-    speed: 0,
+    hitDie: '',
+    speed: '',
+    savingThrows: [], //{ stat, modifier }
     damageVulnerabilities: [],
     damageImmunities: [],
     damageResistances: [],
@@ -59,3 +68,14 @@ export const buildMonsterId = monster => {
     monster.id = monster.name + monster.xp;
     return monster;
 };
+
+const addSavingThrows = tnx => {
+    getAllMonsters(tnx).then(monsterList => {
+        monsterList.forEach(monster => {
+            monster.savingThrows = [];
+            addMonster(monster, tnx);
+        });
+    })
+};
+
+addUpgrade(addSavingThrows, 4);
