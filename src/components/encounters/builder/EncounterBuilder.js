@@ -7,11 +7,48 @@ import PlayerViewer from '../../players/PlayerViewer';
 import { LIST } from '../Views';
 import EBMonsterList from './EBMonsterList';
 import EBPlayerList from './EBPlayerList';
+import { findThreshold } from './XPThresholds';
 
 import './EncounterBuilder.css';
 
 const calculateDifficulty = encounter => {
-    return 'Easy';
+    const thresholds = encounter.players.map(player => findThreshold(player.level));
+    const threshold = thresholds.reduce((totalThreshold, currentValue) => {
+        totalThreshold.easy += currentValue.easy;
+        totalThreshold.medium += currentValue.medium;
+        totalThreshold.hard += currentValue.hard;
+        totalThreshold.deadly += currentValue.deadly;
+        return totalThreshold;
+    }, {easy: 0, medium: 0, hard: 0, deadly: 0});
+    const monsterXpAndCount = encounter.monsters.reduce((total, monsterGroup) => {
+        total.xp += (monsterGroup.monster.xp * monsterGroup.count);
+        total.count += (monsterGroup.count);
+        return total;
+    }, {xp: 0, count: 0});
+    let monsterXp = monsterXpAndCount.xp;
+    const count = monsterXpAndCount.count;
+    if(count >= 15) {
+        monsterXp *= 4;
+    } else if(count >= 11) {
+        monsterXp *= 3;
+    } else if(count >= 7) {
+        monsterXp *= 2.5;
+    } else if (count >= 3) {
+        monsterXp *= 2;
+    } else if (count === 2) {
+        monsterXp *= 1.5;
+    }
+    if(monsterXp > threshold.deadly) {
+        return 'Deadly';
+    } else if(monsterXp > threshold.hard) {
+        return 'Hard';
+    } else if (monsterXp > threshold.medium) {
+        return 'Medium';
+    } else if (monsterXp > threshold.easy) {
+        return 'Easy';
+    } else {
+        return 'Trivial';
+    }
 }
 
 class EncounterBuilder extends Component {
@@ -46,7 +83,7 @@ class EncounterBuilder extends Component {
             buildUseableEncounter(encounter).then(useableEncounter => {
                 this.setState({
                     encounter: useableEncounter,
-                    difficulty: calculateDifficulty(encounter),
+                    difficulty: calculateDifficulty(useableEncounter),
                 });
             });
         }
@@ -77,6 +114,7 @@ class EncounterBuilder extends Component {
         encounter.players.push(player);
         this.setState({
             selectingPlayer: false,
+            difficulty: calculateDifficulty(encounter),
         })
     }
 
@@ -88,6 +126,7 @@ class EncounterBuilder extends Component {
         });
         this.setState({
             selectingMonster: false,
+            difficulty: calculateDifficulty(encounter),
         })
     }
 
@@ -102,6 +141,7 @@ class EncounterBuilder extends Component {
             });
             this.setState({
                 encounter,
+                difficulty: calculateDifficulty(encounter),
             })
         }
     }
@@ -112,6 +152,7 @@ class EncounterBuilder extends Component {
             encounter.players = encounter.players.filter(player => player.id !== playerId);
             this.setState({
                 encounter,
+                difficulty: calculateDifficulty(encounter),
             });
         }
     }
@@ -122,6 +163,7 @@ class EncounterBuilder extends Component {
             encounter.monsters = encounter.monsters.filter(monster => monster.monster.id !== monsterId);
             this.setState({
                 encounter,
+                difficulty: calculateDifficulty(encounter),
             });
         }
     }
