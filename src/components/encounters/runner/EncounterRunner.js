@@ -14,11 +14,14 @@ import { DAMAGE, HEAL, TEMP_HEALTH } from './TargetTypes';
 const buildDisplayString = creature => {
     let result = creature.name;
     if(creature.multiple) {
-        result += ' ' + creature.monsterId.toString();
+        result += '[' + creature.monsterId.toString() +']';
     }
     result += ' ' + creature.hp + '/' + creature.maxHp;
     if(creature.tmpHp > 0) {
         result += ' (' + creature.tmpHp + ' Tmp Hp)';
+    }
+    if(!creature.isPlayer) {
+        result += ' AC: ' + creature.monster.ac.toString();
     }
     return result;
 }
@@ -64,7 +67,7 @@ class EncounterRunner extends Component {
             isPlayer: true,
         }));
         useableEncounter.monsters.forEach(monsterGroup => {
-            const multiple = monsterGroup.count > 0 ? true : false;
+            const multiple = monsterGroup.count > 1 ? true : false;
             for(let i = 0; i < monsterGroup.count; i++) {
                 id++;
                 creatureList.push({
