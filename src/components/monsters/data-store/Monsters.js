@@ -101,3 +101,14 @@ const convertDamageTypesToStringFields = tnx => {
 };
 
 addUpgrade(convertDamageTypesToStringFields, 5);
+
+const fixXpString = tnx => {
+    getAllMonsters(tnx).then(monsterList => {
+        monsterList.forEach(monster => {
+            monster.xp = parseInt(monster.xp);
+            addMonster(monster, tnx);
+        });
+    })
+};
+
+addUpgrade(fixXpString, 6);

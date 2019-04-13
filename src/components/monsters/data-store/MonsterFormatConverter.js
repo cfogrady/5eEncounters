@@ -76,7 +76,7 @@ export const fromJsonExportFormat = exportMonster => {
     monster.conditionImmunities = exportMonster.condition_immunities;
     monster.senses = exportMonster.senses;
     monster.languages = exportMonster.languages;
-    monster.xp = calculateXP(exportMonster.challenge_rating);
+    monster.xp = parseInt(calculateXP(exportMonster.challenge_rating));
     if(exportMonster.special_abilities) {
         monster.abilities = exportMonster.special_abilities.map(specialAbility => ({
             name: specialAbility.name,
