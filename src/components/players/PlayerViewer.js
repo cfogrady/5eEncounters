@@ -6,6 +6,7 @@ import PlayerViewerHeader from './PlayerViewerHeader';
 import './PlayerViewer.css';
 import PlayerModal from './modal/PlayerModal';
 import SelectOrEditModal from '../common/modals/SelectOrEditModal';
+import LoadingModal from '../common/modals/LoadingModal';
 
 /*const sortPlayerListByCharacter = playerList => {
     return playerList.sort((a, b) => {
@@ -146,7 +147,7 @@ class PlayerViewer extends Component {
     }
 
     render() {
-        const { playerList, selectedPlayer, filterName, selectOrEditPlayer } = this.state;
+        const { loading, playerList, selectedPlayer, filterName, selectOrEditPlayer } = this.state;
         const { onSelectPlayer } = this.props;
         const showSelectedPlayer = selectedPlayer != null;
         const showSelectOrEditPlayer = selectOrEditPlayer != null;
@@ -158,6 +159,7 @@ class PlayerViewer extends Component {
                 onAddPlayer={this.onAddPlayer}
                 onNameFilter={this.onNameFilter}
             />
+            <LoadingModal show={loading}/>
             <SelectOrEditModal
                 onSelect={_ => onSelectPlayer(selectOrEditPlayer)}
                 onView={_ => this.viewPlayer(selectOrEditPlayer)}

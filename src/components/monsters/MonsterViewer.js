@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import MoonLoader from 'react-spinners/MoonLoader';
 import { getAllMonsters, buildEmptyMonster, buildMonsterId, addMonster, removeMonsterById } from './data-store/Monsters';
 import { addMonsterImage, removeMonsterImageById } from './data-store/MonsterImages';
 import MonsterViewerHeader from './MonsterViewerHeader';
 import MonsterModal from './modal/MonsterModal';
+import LoadingModal from '../common/modals/LoadingModal';
 import { calculateCR } from './UnitConversionCalculator';
 import SelectOrEditModal from '../common/modals/SelectOrEditModal';
 
@@ -28,7 +28,7 @@ class MonsterViewer extends Component {
         super(props);
         this.state = {
             monsterList: [],
-            // loading: true,
+            loading: true,
             selectedMonster: null,
             imageURL: null,
             filterXp: null,
@@ -179,7 +179,7 @@ class MonsterViewer extends Component {
 
     render() {
         const { onSelectMonster } = this.props;
-        const { monsterList, selectedMonster, filterName, filterXp, editing, selectOrViewMonster } = this.state;
+        const { loading, monsterList, selectedMonster, filterName, filterXp, editing, selectOrViewMonster } = this.state;
         const showSelectedMonster = selectedMonster != null;
         const showSelectOrViewMonster = selectOrViewMonster != null;
         const formattedFilterName = filterName == null || filterName === '' ? null : filterName.toUpperCase();
@@ -192,6 +192,7 @@ class MonsterViewer extends Component {
                 onNameFilter={this.changeNameFilter}
                 onXPFilter={this.changeXPFilter}
             />
+            <LoadingModal show={loading}/>
             <SelectOrEditModal
                 onSelect={_ => onSelectMonster(selectOrViewMonster)}
                 onView={_ => this.viewMonster(selectOrViewMonster)}

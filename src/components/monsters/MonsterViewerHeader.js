@@ -35,7 +35,9 @@ class MonsterViewerHeader extends Component {
                         />
                     </div>
                 </div>
-                <button onClick={onAddMonster}>Add Monster</button>
+                <div className='mvh-row'>
+                    <button onClick={onAddMonster}>Add Monster</button>
+                </div>
             </div>
         );
     }

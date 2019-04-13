@@ -1,18 +1,5 @@
 import { buildEmptyMonster } from './Monsters';
-import { calculateXP } from '../UnitConversionCalculator';
-
-export const toJsonExportFormat = monster => {
-    const exportMonster = {};
-    exportMonster.name = monster.name;
-    exportMonster.size = monster.size;
-    exportMonster.type = monster.type.toLowerCase();
-    exportMonster.subtype = '';
-    exportMonster.alignment = monster.alignment.toLowerCase();
-    exportMonster.armor_class = monster.ac;
-    exportMonster.hit_points = monster.hp;
-
-    return exportMonster;
-};
+import { calculateXP, calculateCR } from '../UnitConversionCalculator';
 
 const capitalizeEachWord = string => {
     let words = string.split(' ');
@@ -108,4 +95,68 @@ export const fromJsonExportFormat = exportMonster => {
             descr: action.desc,
         }));
     }
+    return monster;
+}
+
+export const toJsonExportFormat = monster => {
+    const exportMonster = {};
+    exportMonster.name = monster.name;
+    exportMonster.size = monster.size;
+    exportMonster.type = monster.type.toLowerCase();
+    exportMonster.subtype = '';
+    exportMonster.alignment = monster.alignment.toLowerCase();
+    exportMonster.armor_class = monster.armor_class;
+    exportMonster.hit_points = monster.hp;
+    exportMonster.hit_dice = monster.hitDie;
+    exportMonster.speed = monster.speed;
+    exportMonster.strength = monster.stats.str;
+    exportMonster.dexterity = monster.stats.dex;
+    exportMonster.constitution = monster.stats.con;
+    exportMonster.intelligence = monster.stats.int;
+    exportMonster.wisdom = monster.stats.wis;
+    exportMonster.charisma = monster.stats.cha;
+    monster.savingThrows.forEach(save => {
+        if(save.stat === 'STR') {
+            exportMonster.strength_save = save.modifier;
+        } else if(save.stat === 'DEX') {
+            exportMonster.dexterity_save = save.modifier;
+        } else if(save.stat === 'CON') {
+            exportMonster.constitution_save = save.modifier;
+        } else if(save.stat === 'INT') {
+            exportMonster.intelligence_save = save.modifier;
+        } else if(save.stat === 'WIS') {
+            exportMonster.wisdom_save = save.modifier;
+        } else if(save.stat === 'CHA') {
+            exportMonster.charisma_save = save.modifier;
+        }
+    });
+    monster.skills.forEach(skill => {
+        exportMonster[skill.skill] = skill.modifier;
+    });
+    exportMonster.damage_vulnerabilities = monster.damageVulnerabilities;
+    exportMonster.damage_resistances = monster.damageResistances; 
+    exportMonster.damage_immunities = monster.damageImmunities;
+    exportMonster.condition_immunities = monster.conditionImmunities;
+    exportMonster.senses = monster.senses;
+    exportMonster.languages = monster.languages;
+    exportMonster.challenge_rating = calculateCR(monster.xp);
+    if(monster.abilities.length > 0) {
+        exportMonster.special_abilities = monster.abilities.map(ability => ({
+            name: ability.name,
+            desc: ability.descr,
+        }));
+    }
+    if(monster.actions.length > 0) {
+        exportMonster.actions = monster.actions.map(action => ({
+            name: action.name,
+            desc: action.descr,
+        }));
+    }
+    if(monster.legendaryActions.actions.length > 0) {
+        exportMonster.legendary_actions = monster.legendaryActions.actions.map(action => ({
+            name: action.name,
+            desc: action.descr,
+        }));
+    }
+    return exportMonster;
 }

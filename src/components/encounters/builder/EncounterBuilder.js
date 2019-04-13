@@ -195,7 +195,7 @@ class EncounterBuilder extends Component {
                 <button className='eb-margin-element' onClick={this.onSave}>Save</button>
                 </div>
                 <div className='eb-difficulty-text'>Difficulty:&nbsp;{difficulty}</div>
-                <div className='eb-columns-container'>
+                <div className='eb-groups-container'>
                     <EBPlayerList playerList={encounter.players} onAddPlayer={this.addPlayer} onRemovePlayer={this.onRemovePlayer}/>
                     <EBMonsterList monsterList={encounter.monsters} onAddMonster={this.addMonster} onRemoveMonster={this.onRemoveMonster} onChangeMonsterQty={this.onChangeMonsterQty}/>
                 </div>

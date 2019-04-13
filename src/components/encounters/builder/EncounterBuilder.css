@@ -11,9 +11,9 @@
     margin: .5em;
 }
 
-.eb-columns-container {
+.eb-groups-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
@@ -24,7 +24,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 50%;
+    width: 100%;
+    height: 45%;
+    margin: .25em;
 }
 
 .eb-list-element {
