@@ -2,7 +2,7 @@ import { openDB } from 'idb';
 
 const databaseName = '5eEncounters';
 
-const dbVersion = 6;
+const dbVersion = 7;
 
 let database = null; //loading
 

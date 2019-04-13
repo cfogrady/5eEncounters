@@ -78,7 +78,7 @@ const addSavingThrows = tnx => {
     })
 };
 
-addUpgrade(addSavingThrows, 4);
+addUpgrade(addSavingThrows, 7);
 
 const convertDamageTypesToStringFields = tnx => {
     getAllMonsters(tnx).then(monsterList => {
