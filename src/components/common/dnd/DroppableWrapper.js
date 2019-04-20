@@ -10,6 +10,7 @@ const DroppableWrapper = props => (
             {...provided.droppableProps}
             {...provided.droppablePlaceholder}>
               {props.children}
+              {provided.placeholder}
       </div>
     )}
   </Droppable>

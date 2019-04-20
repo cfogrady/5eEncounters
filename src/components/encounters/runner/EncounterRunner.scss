@@ -1,3 +1,5 @@
+@import '../../common/styles/Shared.scss';
+
 .er-container {
     display: flex;
     flex-direction: column;
@@ -7,8 +9,6 @@
 }
 
 .er-creature-container {
-    background-color: darkslategray;
-    color: white;
     width: 90%;
     margin-top: .25em;
     margin-bottom: .25em;
@@ -18,6 +18,16 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.er-primary {
+    background-color: $primary-button-color;
+    color: $primary-font-color;
+}
+
+.er-secondary {
+    background-color: $secondary-button-color;
+    color: $secondary-font-color;
 }
 
 .er-droppable {
@@ -38,4 +48,12 @@
 
 .er-element {
     margin: .25em;
+}
+
+.initiative-input {
+    margin-left: .5em;
+    margin-right: .5em;
+    width: 3em;
+    border: 0px;
+    padding: 0px;
 }

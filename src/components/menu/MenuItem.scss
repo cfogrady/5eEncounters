@@ -1,7 +1,9 @@
+@import '../common/styles/Shared.scss';
+
 .menu-item {
     font-size: 36pt;
-    color: white;
-    background-color: darkslategray;
+    color: $primary-font-color;
+    background-color: $primary-button-color;
     margin-top: .5em;
     padding: .25em;
     border-radius: .5em;

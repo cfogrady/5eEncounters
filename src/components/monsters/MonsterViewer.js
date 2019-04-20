@@ -8,7 +8,7 @@ import LoadingModal from '../common/modals/LoadingModal';
 import { calculateCR } from './UnitConversionCalculator';
 import SelectOrEditModal from '../common/modals/SelectOrEditModal';
 
-import './MonsterViewer.css';
+import './MonsterViewer.scss';
 
 const sortMonsterList = monsterList => {
     return monsterList.sort((a, b) => {

@@ -4,7 +4,7 @@ import { getAllEncounters, removeEncounterById } from '../data-store/Encounters'
 import { BUILDER, RUNNER } from '../Views';
 import EncountersListHeader from './EncountersListHeader';
 
-import './EncountersList.css';
+import './EncountersList.scss';
 
 const sortEncounterList = encounterList => {
     return encounterList.sort((a, b) => {

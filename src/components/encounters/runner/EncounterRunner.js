@@ -5,9 +5,11 @@ import DroppableWrapper from '../../common/dnd/DroppableWrapper';
 import DraggableWrapper from '../../common/dnd/DraggableWrapper';
 import { buildUseableEncounter } from '../data-store/EncounterHelpers';
 import MonsterModal from '../../monsters/modal/MonsterModal';
+import { calculateMod } from '../../monsters/UnitConversionCalculator';
 import { LIST } from '../Views';
+import EncounterRunnerHeader from './EncounterRunnerHeader';
 
-import './EncounterRunner.css';
+import './EncounterRunner.scss';
 import TargetModal from './TargetModal';
 import { DAMAGE, HEAL, TEMP_HEALTH } from './TargetTypes';
 
@@ -26,6 +28,20 @@ const buildDisplayString = creature => {
     return result;
 }
 
+const random = (rangeStart, rangeEnd) => {
+    const range = rangeEnd - rangeStart;
+    return Math.floor(Math.random() * (range+1)) + rangeStart;
+}
+
+const withinRange = (number, rangeStart, rangeEnd) => {
+    for(let i = rangeStart; i <= rangeEnd; i++) {
+        if(number === i) {
+            return true;
+        }
+    }
+    return false;
+}
+
 class EncounterRunner extends Component {
     constructor(props) {
         super(props);
@@ -33,12 +49,21 @@ class EncounterRunner extends Component {
             creatureList: [],
             selectedMonster: null,
             targetIdx: null,
+            currentTurnIdx: null,
+            showInitiative: false,
         };
         this.onDragEnd = this.onDragEnd.bind(this);
         this.selectMonster = this.selectMonster.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
         this.onDealToTarget = this.onDealToTarget.bind(this);
         this.removeCreature = this.removeCreature.bind(this);
+        this.onStartTracking = this.onStartTracking.bind(this);
+        this.onNextTurn = this.onNextTurn.bind(this);
+        this.onPreviousTurn = this.onPreviousTurn.bind(this);
+        this.toggleShowInitiative = this.toggleShowInitiative.bind(this);
+        this.rollCreatureInitiatives = this.rollCreatureInitiatives.bind(this);
+        this.sortByInitiative = this.sortByInitiative.bind(this);
+        this.onChangeTargetInitiative = this.onChangeTargetInitiative.bind(this);
     }
 
     componentDidMount() {
@@ -65,6 +90,7 @@ class EncounterRunner extends Component {
             tmpHp: 0,
             multiple: false,
             isPlayer: true,
+            initiative: 0,
         }));
         useableEncounter.monsters.forEach(monsterGroup => {
             const multiple = monsterGroup.count > 1 ? true : false;
@@ -80,6 +106,7 @@ class EncounterRunner extends Component {
                     multiple,
                     monster: monsterGroup.monster,
                     isPlayer: false,
+                    initiative: 0,
                 });
             }
         });
@@ -159,21 +186,117 @@ class EncounterRunner extends Component {
     }
 
     onDragEnd(result) {
-        let { creatureList } = this.state;
+        let { creatureList, currentTurnIdx } = this.state;
+        if(result.destination == null) {
+            return;
+        }
         const destIndex = result.destination.index;
         const currentIndex = result.source.index;
         const creature = creatureList[currentIndex];
         creatureList.splice(currentIndex, 1);
         creatureList.splice(destIndex, 0, creature);
+        const lowerIndex = currentIndex < destIndex ? currentIndex : destIndex;
+        const higherIndex = currentIndex > destIndex ? currentIndex : destIndex;
+        if(currentTurnIdx != null && currentIndex !== destIndex && withinRange(currentTurnIdx, lowerIndex, higherIndex)) {
+            if(currentTurnIdx === currentIndex && currentIndex > destIndex) {
+                currentTurnIdx ++;
+            } else if(currentTurnIdx !== currentIndex && currentIndex < destIndex) {
+                currentTurnIdx--;
+            } else if(currentTurnIdx !== currentIndex) {
+                currentTurnIdx++;
+            }
+            if(currentTurnIdx >= creatureList.length) {
+                currentTurnIdx = 0;
+            } else if(currentTurnIdx < 0) {
+                currentTurnIdx = creatureList.length - 1;
+            }
+        }
+        this.setState({
+            creatureList,
+            currentTurnIdx,
+        });
+    }
+
+    onNextTurn() {
+        const { creatureList } = this.state;
+        let { currentTurnIdx } = this.state;
+        currentTurnIdx++;
+        if(currentTurnIdx >= creatureList.length) {
+            currentTurnIdx = 0;
+        }
+        this.setState({
+            currentTurnIdx,
+        });
+    }
+
+    onPreviousTurn() {
+        const { creatureList } = this.state;
+        let { currentTurnIdx } = this.state;
+        currentTurnIdx--;
+        if(currentTurnIdx < 0) {
+            currentTurnIdx = creatureList.length - 1;
+        }
+        this.setState({
+            currentTurnIdx,
+        });
+    }
+
+    onStartTracking() {
+        this.setState({
+            currentTurnIdx: 0,
+        });
+    }
+
+    toggleShowInitiative(toggle) {
+        this.setState({
+            showInitiative: toggle.target.checked,
+        });
+    }
+
+    rollCreatureInitiatives() {
+        const { creatureList } = this.state;
+        creatureList.forEach(creature => {
+            if(!creature.isPlayer) {
+                creature.initiative = random(1, 20) + calculateMod(creature.monster.stats.dex);
+            }
+        });
         this.setState({
             creatureList,
         });
     }
 
+    sortByInitiative() {
+        let { creatureList } = this.state;
+        creatureList.sort((cr1, cr2) =>  cr2.initiative - cr1.initiative);
+        this.setState({
+            creatureList,
+        });
+    }
+
+    onChangeTargetInitiative(idx) {
+        return event => {
+            const { creatureList } = this.state;
+            creatureList[idx].initiative = event.target.value;
+            this.setState({
+                creatureList,
+            });
+        };
+    }
+
     render() {
-        const { creatureList, selectedMonster, targetIdx } = this.state;
+        const { creatureList, selectedMonster, targetIdx, currentTurnIdx, showInitiative } = this.state;
         return (
             <div className='er-container'>
+                <EncounterRunnerHeader
+                    onStartTracking={this.onStartTracking}
+                    onNextTurn={this.onNextTurn}
+                    onPreviousTurn={this.onPreviousTurn}
+                    toggleShowInitiative={this.toggleShowInitiative}
+                    rollCreatureInitiatives={this.rollCreatureInitiatives}
+                    sortByInitiative={this.sortByInitiative}
+                    showInitiative={showInitiative}
+                    currentTurnIdx={currentTurnIdx}
+                />
                 <MonsterModal
                     monster={selectedMonster}
                     show={selectedMonster != null}
@@ -188,8 +311,11 @@ class EncounterRunner extends Component {
                     <DroppableWrapper className='er-droppable' droppableId='creatureList'>
                         { creatureList.map((creature, idx) => (
                             <DraggableWrapper className='er-draggable' key={creature.id} draggableId={creature.id.toString()} index={idx}>
-                                <div className='er-creature-container'>
-                                    <div onClick={creature.isPlayer ? null : this.selectMonster(creature)} className='er-element'>{buildDisplayString(creature)}</div>
+                                <div className={`er-creature-container ${currentTurnIdx !== idx ? 'er-primary' : 'er-secondary'}`}>
+                                    <div className='er-element'>
+                                        <span onClick={creature.isPlayer ? null : this.selectMonster(creature)}>{buildDisplayString(creature)}</span>
+                                        {showInitiative && <input className="initiative-input" type="number" value={creature.initiative} onChange={this.onChangeTargetInitiative(idx)}/>}
+                                    </div>
                                     <div>
                                         <button className='er-element' onClick={this.selectTarget(idx)}>Target</button>
                                         {creature.hp <= 0 && <button className='er-element' onClick={this.removeCreature(idx)}>Remove</button>}

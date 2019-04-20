@@ -1,14 +1,18 @@
-.mv-view {
+@import '../common/styles/Shared.scss';
+
+.pv-view {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 }
 
-.mv-monster {
-    background-color: darkslategray;
-    color: white;
-    width: 20em;
+.pv-player {
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-button-color;
+    color: $primary-font-color;
+    width: 12em;
     margin-top: .25em;
     margin-bottom: .25em;
     padding: .25em;

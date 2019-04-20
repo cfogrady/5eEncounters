@@ -80,7 +80,6 @@ class App extends Component {
   render() {
     const displayElement = this.getDisplayElement();
     const { currentLocation, databaseLoaded, loadingSRDMonsters } = this.state;
-    console.log('Render loadingSRD:', loadingSRDMonsters);
     if(!databaseLoaded) {
       return (
         <LoadingModal show={!databaseLoaded}>
