@@ -1,3 +1,5 @@
+@import '../../common/styles/Shared.scss';
+
 .el-view {
     display: flex;
     flex-direction: column;
@@ -8,8 +10,8 @@
 .el-encounter {
     display: flex;
     flex-direction: column;
-    background-color: darkslategray;
-    color: white;
+    background-color: $primary-button-color;
+    color: $primary-font-color;
     width: 15em;
     margin-top: .25em;
     margin-bottom: .25em;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getAllPlayers, removePlayerById, addPlayer, buildEmptyPlayer } from './data-store/Players';
 import PlayerViewerHeader from './PlayerViewerHeader';
 
-import './PlayerViewer.css';
+import './PlayerViewer.scss';
 import PlayerModal from './modal/PlayerModal';
 import SelectOrEditModal from '../common/modals/SelectOrEditModal';
 import LoadingModal from '../common/modals/LoadingModal';
