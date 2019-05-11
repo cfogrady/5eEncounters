@@ -8,6 +8,7 @@
     padding: .5em;
     max-height: 90vh;
     border-radius: .5em;
+    min-width: 23em;
 }
 
 .monster-form-section {
@@ -47,6 +48,24 @@
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
+}
+
+.physical-stat-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.mental-stat-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 10px;
 }
 
 .row-container-space-between {
