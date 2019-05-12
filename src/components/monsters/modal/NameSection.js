@@ -12,9 +12,9 @@ const NameSection = ({ onChange, monster, editable }) => {
             <div className='monster-form-section border-bottom'>
                 <input type='text' placeholder='Monster Name' onChange={onChange('name')} value={monster.name || ''}/>
                 <div className='monster-form-row-section'>
-                    <SizeSelector value={monster.size || 'None'} onChange={onChange('size')}/>
-                    <div className='left-margin'><TypeSelector value={monster.type || 'None'} onChange={onChange('type')}/></div>
-                    <div className='left-margin'><AlignmentSelector value={monster.alignment || 'None'} onChange={onChange('alignment')}/></div>
+                    <div className='right-margin top-margin'><SizeSelector value={monster.size || 'None'} onChange={onChange('size')}/></div>
+                    <div className='right-margin top-margin'><TypeSelector value={monster.type || 'None'} onChange={onChange('type')}/></div>
+                    <div className='right-margin top-margin'><AlignmentSelector value={monster.alignment || 'None'} onChange={onChange('alignment')}/></div>
                 </div>
             </div>
         );

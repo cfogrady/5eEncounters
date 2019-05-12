@@ -8,7 +8,7 @@
     padding: .5em;
     max-height: 90vh;
     border-radius: .5em;
-    min-width: 23em;
+    min-width: 18em;
 }
 
 .monster-form-section {
@@ -30,7 +30,7 @@
 }
 
 .textarea-size {
-    width: 25em;
+    min-width: 20em;
     height: 5em;
 }
 
@@ -86,12 +86,15 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .left-margin {
     margin-left: 10px;
+}
+
+.right-margin {
+    margin-right: .5em;
 }
 
 .mm-align-left {
