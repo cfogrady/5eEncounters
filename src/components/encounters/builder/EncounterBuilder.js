@@ -185,14 +185,14 @@ class EncounterBuilder extends Component {
         return (
             <div className='eb-view'>
                 <div className='eb-header'>
-                <input
-                    className='eb-name-input'
-                    type='text'
-                    placeholder='Name Encounter'
-                    onChange={this.changeName}
-                    value={encounter.name}
-                />
-                <button className='eb-margin-element' onClick={this.onSave}>Save</button>
+                    <input
+                        className='eb-name-input'
+                        type='text'
+                        placeholder='Name Encounter'
+                        onChange={this.changeName}
+                        value={encounter.name}
+                    />
+                    <button className='eb-margin-element' onClick={this.onSave}>Save</button>
                 </div>
                 <div className='eb-difficulty-text'>Difficulty:&nbsp;{difficulty}</div>
                 <div className='eb-groups-container'>

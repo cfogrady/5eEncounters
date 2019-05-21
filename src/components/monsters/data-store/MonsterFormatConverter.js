@@ -89,6 +89,12 @@ export const fromJsonExportFormat = exportMonster => {
             descr: action.desc,
         }));
     }
+    if(exportMonster.reactions) {
+        monster.reactions = exportMonster.reactions.map(reaction => ({
+            name: reaction.name,
+            descr: reaction.desc,
+        }));
+    }
     if(exportMonster.legendary_actions) {
         monster.legendaryActions.actions = exportMonster.legendary_actions.map(action => ({
             name: action.name,
@@ -150,6 +156,12 @@ export const toJsonExportFormat = monster => {
         exportMonster.actions = monster.actions.map(action => ({
             name: action.name,
             desc: action.descr,
+        }));
+    }
+    if(monster.reactions != null && monster.reactions.length > 0) {
+        exportMonster.reactions = monster.reactions.map(reaction => ({
+            name: reaction.name,
+            desc: reaction.descr,
         }));
     }
     if(monster.legendaryActions.actions.length > 0) {
