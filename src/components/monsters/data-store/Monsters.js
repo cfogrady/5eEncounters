@@ -1,4 +1,5 @@
 import { getDatabase, addStore, addUpgrade } from '../../common/data-store/IndexedDB';
+import { fromJsonExportFormat } from './MonsterFormatConverter';
 
 const storeName = 'monsters';
 
@@ -55,6 +56,7 @@ export const buildEmptyMonster = _ => ({
     senses: '',
     languages: '',
     actions: [], //{name, descr}
+    reactions: [], //{name, descr}
     abilities: [], //{name, descr}
     legendaryActions: {
         summary: '',
@@ -112,3 +114,28 @@ const fixXpString = tnx => {
 };
 
 addUpgrade(fixXpString, 6);
+
+const addReactions = tnx => {
+    console.log('Adding reactions');
+    fetch('https://raw.githubusercontent.com/cfogrady/5eEncounters/master/5e-SRD-Monsters.json')
+        .then(response => response.json())
+        .then(data => {
+          return data.reduce((promise, exportMonster) => {
+            if(exportMonster.license) {
+              return promise;
+            }
+            const monster = fromJsonExportFormat(exportMonster);
+            buildMonsterId(monster);
+            return promise.then(_ => getMonsterById(monster.id).then(oldMonster => {
+                if(oldMonster != null) {
+                    monster.imageKey = oldMonster.imageKey;
+                }
+                return addMonster(monster);
+            }).catch(err => {
+                return addMonster(monster);
+            }));
+          }, new Promise((resolve, reject) => resolve()));
+        });
+};
+
+addUpgrade(addReactions, 8, 5);

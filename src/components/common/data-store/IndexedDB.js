@@ -2,7 +2,7 @@ import { openDB } from 'idb';
 
 const databaseName = '5eEncounters';
 
-const dbVersion = 7;
+const dbVersion = 8;
 
 let database = null; //loading
 
@@ -14,8 +14,8 @@ export const addStore = (name, keyData) => {
     stores = stores.concat([{ name, keyData }]);
 };
 
-export const addUpgrade = (upgradeFunc, version) => {
-    upgrades = upgrades.concat([{ upgradeFunc, version }]);
+export const addUpgrade = (upgradeFunc, version, fromVersion=0) => {
+    upgrades = upgrades.concat([{ upgradeFunc, version, fromVersion }]);
 }
 
 const upgrade = (db, oldVersion, newVersion, transaction) => {
@@ -26,7 +26,7 @@ const upgrade = (db, oldVersion, newVersion, transaction) => {
         }
     });
     for(let i = oldVersion + 1; i <= newVersion; i++) {
-        let versionUpgrades = upgrades.filter(upgrade => upgrade.version === i);
+        let versionUpgrades = upgrades.filter(upgrade => upgrade.version === i && upgrade.fromVersion <= oldVersion);
         versionUpgrades.forEach(upgrade => upgrade.upgradeFunc(transaction));
     }
 };

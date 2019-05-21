@@ -8,6 +8,7 @@ import StatSection from './StatSection';
 import SkillsSection from './SkillsSection';
 import AbilitiesSection from './AbilitiesSection';
 import ActionsSection from './ActionsSection';
+import ReactionsSection from './ReactionsSection';
 import LegendaryActionsSection from './LegendaryActionsSection';
 import MonsterImageSection from './MonsterImageSection';
 import DescriptionSection from './DescriptionSection';
@@ -71,6 +72,7 @@ class MonsterModal extends Component {
                     <SkillsSection editable={editable} monster={monster} onChange={this.onChange} onChangeNumber={this.onChangeNumber} />
                     <AbilitiesSection editable={editable} monster={monster} onChange={this.onChange} />
                     <ActionsSection editable={editable} monster={monster} onChange={this.onChange} />
+                    <ReactionsSection editable={editable} monster={monster} onChange={this.onChange} />
                     <LegendaryActionsSection editable={editable} monster={monster} onChange={this.onChange} />
                     <DescriptionSection editable={editable} monster={monster} onChange={this.onChange} />
                     <div className='monster-form-section'>
