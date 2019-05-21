@@ -3,6 +3,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    width: 98%
+    padding: .25em .5em 1em .5em;
+    box-sizing: border-box;
+    width: 100%
+}
+
+.elh-component {
+    margin: .25em;
 }

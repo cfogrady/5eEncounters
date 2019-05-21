@@ -14,12 +14,13 @@ class EncountersListHeader extends Component {
         return (
             <div className='encounters-list-header'>
                 <input
+                    className='elh-component'
                     placeholder='Filter By Name'
                     type='search'
                     value={filterName || ''}
                     onChange={onNameFilter}
                 />
-                <button onClick={onAddEncounter}>Add Encounter</button>
+                <button className='elh-component' onClick={onAddEncounter}>Add Encounter</button>
             </div>
         );
     }
