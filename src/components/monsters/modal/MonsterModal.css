@@ -6,7 +6,7 @@
     background-color: antiquewhite;
     overflow-y: scroll;
     padding: .5em;
-    max-height: 90vh;
+    max-height: 85vh;
     border-radius: .5em;
     min-width: 18em;
 }
@@ -19,6 +19,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     width: 100%;
+    flex-shrink: 0;
 }
 
 .number-size {
@@ -87,6 +88,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
+    flex-shrink: 0;
 }
 
 .left-margin {
