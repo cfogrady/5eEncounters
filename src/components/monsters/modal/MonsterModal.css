@@ -6,7 +6,7 @@
     background-color: antiquewhite;
     overflow-y: scroll;
     padding: .5em;
-    max-height: 90vh;
+    max-height: 85vh;
     border-radius: .5em;
     min-width: 18em;
 }
