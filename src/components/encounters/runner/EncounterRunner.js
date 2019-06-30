@@ -4,6 +4,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import DroppableWrapper from '../../common/dnd/DroppableWrapper';
 import DraggableWrapper from '../../common/dnd/DraggableWrapper';
 import { buildUseableEncounter } from '../data-store/EncounterHelpers';
+import { getCurrentEncounter, updateCurrentEncounter, clearCurrentEncounter } from '../data-store/CurrentEncounter';
 import MonsterModal from '../../monsters/modal/MonsterModal';
 import { calculateMod } from '../../monsters/UnitConversionCalculator';
 import { LIST } from '../Views';
@@ -51,6 +52,7 @@ class EncounterRunner extends Component {
             targetIdx: null,
             currentTurnIdx: null,
             showInitiative: false,
+            id: null, //currentEncounterId
         };
         this.onDragEnd = this.onDragEnd.bind(this);
         this.selectMonster = this.selectMonster.bind(this);
@@ -67,7 +69,19 @@ class EncounterRunner extends Component {
     }
 
     componentDidMount() {
-        let { encounter, onChangeView } = this.props;
+        let { encounter, onChangeView, resume } = this.props;
+        if(!resume) {
+            clearCurrentEncounter();
+        } else {
+            getCurrentEncounter().then(currentEncounter => {
+                if(currentEncounter == null) {
+                    console.error('Attempted to resume without an encounter');
+                    onChangeView(LIST, null);
+                } else {
+                    this.setState(currentEncounnter);
+                }
+            });
+        }
         if(encounter == null) {
             console.error('Should not make it to runner without encounter');
             onChangeView(LIST, null);
@@ -283,6 +297,14 @@ class EncounterRunner extends Component {
         };
     }
 
+    componentDidUpdate() {
+        updateCurrentEncounter(this.state).then(id => {
+            if(id !== this.state.id) {
+                this.setState({id});
+            }
+        });
+    }
+
     render() {
         const { creatureList, selectedMonster, targetIdx, currentTurnIdx, showInitiative } = this.state;
         return (
@@ -340,10 +362,12 @@ EncounterRunner.propTypes = {
         players: PropTypes.arrayOf(PropTypes.number),
     }),
     onChangeView: PropTypes.func.isRequired,
+    resume: PropTypes.bool,
 }
 
 EncounterRunner.defaultProps = {
     encounter: null,
+    resume: false,
 }
 
 export default EncounterRunner;
